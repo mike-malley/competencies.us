@@ -109,6 +109,26 @@ small {
     border-bottom: 1px solid #ddd;
 }
 
+.top-bar .button.secondary{
+    background-color:#dad6d6;
+    color:#4a4a4a;
+}
+
+.top-bar #sessionServerSelect.noServers{
+    background-color:rgba(255, 127, 98, 0.48);
+    color: #3a3939;
+    font-style:italic;
+    font-weight:bold;
+    width:110%;
+    padding-right:0px;
+}
+
+.top-bar input.error{
+    border-color: red;
+    box-shadow: red 1px 2px;
+    background-color: rgb(244, 174, 174);
+}
+
 /* --- Accordians --- */
 
 .accordion-title
@@ -688,3 +708,42 @@ li.cass-competency-level:before {
 	display:inline;
 	
 }
+
+.frameworkWorkspaceTabBtn{
+    height:100%;
+    cursor:pointer;
+}
+
+.frameworkWorkspaceTabBtn:hover{
+    background-color:#f7f7f7;
+    box-shadow:1px -2px 4px 2px #f7f7f7;
+    font-weight: bold;
+}
+
+.frameworkWorkspaceTabBtn.active{
+    background-color:#e1f0fd;
+    box-shadow:-1px -2px 4px 2px #e1f0fd;
+    font-weight: bold;
+}
+
+.frameworkWorkspaceTabBtn.active:hover{
+      background-color:#e1f0fd;
+      box-shadow:-1px -2px 4px 2px #e1f0fd;
+}
+
+.frameworkListFramework:hover{
+	box-shadow: #f7f7ef -1px 2px 6px 3px;
+	background-color: #f7f7ef;
+	cursor:pointer;
+}
+
+#newFrameworkDropdown{
+	width:200px;
+	padding:0px;
+}
+
+#newFrameworkDropdown li{
+	padding:0.5rem 1rem;;	
+}
+
+

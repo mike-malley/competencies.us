@@ -1,0 +1,53 @@
+<div class="row" style="margin-top:2rem;">
+    <div class="columns small-2" style="font-weight:bold; text-align:right;">
+        Search Frameworks:
+    </div>
+    <div class="columns small-8">
+        <input id="frameworkWorkspaceSearch" type="text" placeholder="Enter Search Term"/>
+    </div>
+    <div class="columns small-2">
+        <button class="button dropdown menu" data-toggle="newFrameworkDropdown">New</button>
+        <ul class="dropdown-pane" id="newFrameworkDropdown" data-dropdown style="list-style-type:none;">
+        	<li id="newFrameworkBuild" title="on Competencies.us"><a>Build</a></li>
+        	<li id="newFrameworkRegister" title="From External Link"><a>Register</a></li>
+        	<li id="newFrameworkImport" title="From CSV, ASN, etc"><a>Import</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="columns large-offset-1 large-10">
+        <hr style="margin-bottom:0.25rem;">
+        <div class="row" style="text-align:center; position: relative; height:1.75rem;">
+            <div id="myFrameworks" class="columns small-6 frameworkWorkspaceTabBtn">
+                My Frameworks</div>
+            <span style="position:absolute; left:49.8%;">|</span>
+            <div id="allFrameworks" class="columns end small-6 frameworkWorkspaceTabBtn active"
+                 style="cursor: pointer; height:100%;">Browse/Search Results</div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:1rem;">
+    <div id="frameworkWorkspaceViewer" class="columns small-12">
+    	<div id="noFrameworks" class="hide">
+    		<p style="text-align:center;">You have not viewed or created any frameworks yet</p>
+
+        	<button class="button secondary" style="margin:auto; padding:0.75rem 2rem; display:block;">Browse</button>
+    	</div>
+    	<div id="frameworkListContainer">
+    		<div id="frameworkListLoading" style="text-align:center; margin-top:1rem;"><i class="fa fa-spin fa-spinner fa-lg"></i></div>
+    		<div id="frameworkListNone" class="hide" style="text-align:center; margin-top:1rem;">No Frameworks Found. Create one above to start.</div>
+    		<ul style="list-style-type: none;">
+    			
+    		</ul>
+    		
+    		<div id="moreFrameworks" style='text-align:center'>
+    			<button class="button hollow" style="padding-left:1.5rem; padding-right:1.5rem;">More Frameworks</button>
+    		</div>
+    	</div>
+        <div id="frameworkContainer" class="hide">
+        
+        </div>
+    </div>
+</div>

@@ -586,13 +586,18 @@ var DataViewer = (function(DataViewer){
 					ScreenManager.changeScreen(new RepoViewScreen(datum));
 			})
 		}
+		if(callbacks != undefined && callbacks["replaceClone"] != undefined ){
+			element.find(".fa-clone").after(callbacks["replaceClone"](datum));
+			element.find(".fa-clone").remove();
+		}else{
+			element.find(".fa-clone").click(function(ev){
+				ev.preventDefault();
+				ModalManager.showModal(new CopyResourceModal(datum, function(){
+					ScreenManager.reloadCurrentScreen();
+				}));
+			});
+		}
 		
-		element.find(".fa-clone").click(function(ev){
-			ev.preventDefault();
-			ModalManager.showModal(new CopyResourceModal(datum, function(){
-				ScreenManager.reloadCurrentScreen();
-			}));
-		});
 		
 		return element;
 	}
@@ -621,15 +626,31 @@ var DataViewer = (function(DataViewer){
 					"<div class='small-2 columns datum-type'></div>" +
 					"<div class='small-4 columns datum-owner'></div>")
 		
-		if(datum["name"] != undefined){
-			row.find(".datum-name").text(datum["name"]);
+		var name;
+		if(Array.isArray(datum["name"])){
+			
+		}else if(datum["name"] instanceof Object && datum["name"]["@value"] != undefined && datum["name"]["@value"] != ""){
+			name = datum["name"]["@value"];
+		}else if(datum["name"] != undefined && datum["name"] != ""){
+			name = datum["name"];
 		}else{
-			row.find(".datum-name").text(id);
+			name = id;
 			row.find(".datum-name").css("font-size", "0.8rem");
-		}
+		}			
+		row.find(".datum-name").text(name);
+
 		
-		if(datum["description"] != undefined)
-			row.find(".datum-description").text(" - "+datum["description"]);
+		var desc;
+		if(Array.isArray(datum["description"])){
+			
+		}else if(datum["description"] instanceof Object && datum["description"]["@value"] != undefined && datum["description"]["@value"] != ""){
+			desc = " - "+datum["description"]["@value"];
+		}else if(datum["description"] != undefined && datum["description"] != ""){
+			desc = " - "+datum["description"];
+		}else{
+			desc = "";
+		}
+		row.find(".datum-description").text(desc);
 		
 		if(datum["type"] != undefined){
 			var typeSplit = datum["type"].split("/");
@@ -703,16 +724,22 @@ var DataViewer = (function(DataViewer){
 			$(".toggleSelectData").text("Select All");
 		})
 		
-		row.find(".fa-clone").click(function(){
-			var selected = [];
-			$("#"+prefix+"-data").find(".row.selected").each(function(i, obj){
-				selected.push(self.dataStore[$(obj).attr("data-id")]);
+		if(callbacks != undefined && callbacks["replaceClone"] != undefined){
+			row.find(".fa-clone").after(callbacks["replaceClone"]());
+			row.find(".fa-clone").remove();
+		}else{
+			row.find(".fa-clone").click(function(){
+				var selected = [];
+				$("#"+prefix+"-data").find(".row.selected").each(function(i, obj){
+					selected.push(self.dataStore[$(obj).attr("data-id")]);
+				});
+				
+				ModalManager.showModal(new CopyResourceModal(selected, function(){
+					ScreenManager.reloadCurrentScreen();
+				}))
 			});
-			
-			ModalManager.showModal(new CopyResourceModal(selected, function(){
-				ScreenManager.reloadCurrentScreen();
-			}))
-		});
+		}
+		
 		
 		row.find(".fa-trash").click(function(){
 			var selected = [];

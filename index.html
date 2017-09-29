@@ -26,12 +26,21 @@
     <link rel="stylesheet" href="css/animate.css" />
 </head>
 
-<body>
-    <div id="menuContainer">
-    </div>
+<body >
 
-    <div id="screenContainer">
-    </div>
+	<div class="wrapper" style="position: relative;margin: 0;padding-bottom: 9rem;min-height: 100%;">
+	    <div id="menuContainer">
+	    </div>
+	
+	    <div id="screenContainer">
+	    </div>
+	
+		<div id="footerContainer" style="position: absolute;right: 0;bottom: 0;left: 0;padding: 1rem;background-color: white;text-align: center;">
+			COMPETENCIES.US is an open source project on <a href="https://github.com/cassproject/competencies.us">Github</a>
+			<br/>
+			<a href="http://cassproject.org">CASS Website</a> | <a href="http://docs.cassproject.org">Developer Guide</a>
+		</div>
+	</div>
 
     <div id="modalContainer" class="reveal tiny" data-reveal>
     </div>
@@ -58,6 +67,7 @@
     <script src="js/vendor/papaparse.js"></script>
     <script src="js/vendor/xml2json.js"></script>
     <script src="js/vendor/hello.all.js"></script>
+    <script src="js/vendor/FileSaver.min.js"></script>
     <script src="generated-js/require.js"></script>
     <script>require("generated-js/pem-jwk");</script>
     <script src="generated-js/base64toArrayBuffer.js"></script>
@@ -99,6 +109,7 @@
     <script src="js/screen/FrameworkSearchScreen.js"></script>
     <script src="js/screen/FrameworkViewScreen.js"></script>
     <script src="js/screen/FrameworkEditScreen.js"></script>
+    <script src="js/screen/FrameworkWorkspaceScreen.js"></script>
     <script src="js/screen/CompetencySearchScreen.js"></script>
     <script src="js/screen/CompetencyViewScreen.js"></script>
     <script src="js/screen/CompetencyEditScreen.js"></script>
@@ -137,6 +148,7 @@
     <script src="js/modal/PermissionPropagationModal.js"></script>
     <script src="js/modal/RepoImportModal.js"></script>
     <script src="js/modal/RepoExportModal.js"></script>
+    <script src="js/modal/CreateIdentityModal.js"></script>
 
     <script src="js/other/AppMenu.js"></script>
     <script src="js/other/AlignmentEditorColumn.js"></script>

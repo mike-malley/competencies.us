@@ -209,15 +209,29 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 			clickDataEdit:function(datum){
 				ScreenManager.changeScreen(new CompetencyEditScreen(datum));
 			},
+			replaceClone:function(datum){
+				var el = $("<i class='fa fa-sitemap dataViewBtn' title='Add to Framework' style='margin-right:1rem;'></i> Add to Framework");
+				
+				el.click(function(){
+					if(datum == undefined)
+						datum = ViewManager.getView("#competencySearchResults").getSelected();
+					ModalManager.showModal(new AddToFrameworkModal(datum));
+				})
+				
+				return el;
+			},
 			moreMenuTools:function(){
 				var container = $("<div></div>");
 				
-				var el = $("<li><span><i class='fa fa-sitemap'></i> Add to Framework</span></li>");
+				var el = $("<li><span><i class='fa fa-clone' title='Copy Resource'></i> Copy Resource(s)</span></li>");
 				
 				el.click(function(){
 					var selected = ViewManager.getView("#competencySearchResults").getSelected();
 					
-					ModalManager.showModal(new AddToFrameworkModal(selected));
+					ModalManager.showModal(new CopyResourceModal(selected, function(){
+						ScreenManager.reloadCurrentScreen();
+					}));
+					//ModalManager.showModal(new AddToFrameworkModal(selected));
 				})
 				
 				container.append(el);
@@ -240,15 +254,27 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 							"<span class='datum-description'></span>" +
 							"</div>" +
 							"<div class='small-4 columns datum-owner'></div>");
-				if(datum["name"] != undefined)
-					row.find(".datum-name").text(datum["name"]);
-				else
-					row.find(".datum-name").text(id);
 				
-				if(datum["description"] != undefined)
-					row.find(".datum-description").text(" - "+datum["description"]);
-				else
-					row.find(".datum-description").text("");
+				var name;
+				if(datum.getName != undefined){
+					name = datum.getName();
+				}else if(datum["name"] != undefined){
+					name = datum["name"];
+				}else{
+					name = id;
+				}
+					
+				row.find(".datum-name").text(name);
+				
+				var desc;
+				if(datum.getDescription != undefined && datum.getDescription() != null && datum.getDescription() != ""){
+					desc = " - "+datum.getDescription();
+				}else if(datum["description"] != undefined && datum["description"] != ""){
+					desc = " - "+datum["description"];
+				}else{
+					desc = "";
+				}
+				row.find(".datum-description").text(desc);
 				
 				if(datum["owner"] != undefined && datum["owner"].length > 0){
 					for(var i in datum["owner"]){

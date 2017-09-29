@@ -127,6 +127,7 @@ var AddToFrameworkModal = (function(AddToFrameworkModal){
 					$("#addToFrameworkList").append(buildFrameworkOption(frameworks[i]));
 				}
 			}
+			$("#addToFrameworkList #loadingOption").remove();
 			
 			if($("#addToFrameworkList option").size() == 0){
 				$("#addToFrameworkList").append("<option selected>Unable to add to any Frameworks</option>");
