@@ -1,2 +1,12 @@
+# node stuff
+node_modules
+# java artifacts
+target
 
-WEB-INF/
+# intellij artifacts
+*.iml
+.idea
+
+*.salt
+*.pem
+*.secret
