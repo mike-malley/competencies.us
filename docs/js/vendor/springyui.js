@@ -393,20 +393,34 @@ Copyright (c) 2010 Dennis Hotson
                     }
                 }
 
-                var contentWidth = node.getWidth(text);
-                var contentHeight = node.getHeight(text);
-                var boxWidth = contentWidth + paddingX;
-                var boxHeight = contentHeight + paddingY;
-
-                ctx.fillRect(s.x - boxWidth / 2, s.y - boxHeight / 2, boxWidth, boxHeight);
 
                 if (node.data.image == undefined) {
-                    ctx.textAlign = "left";
-                    ctx.textBaseline = "top";
-                    ctx.font = (node.data.font !== undefined) ? node.data.font : nodeFont;
-                    ctx.fillStyle = (node.data.color !== undefined) ? node.data.color : "#000000";
-                    ctx.fillText(text, s.x - contentWidth / 2, s.y - contentHeight / 2);
+                	if (text == "o")
+                	{
+                		ctx.beginPath();
+						ctx.fillStyle = (node.data.color !== undefined) ? node.data.color : "#000000";
+                		ctx.ellipse(s.x, s.y-3, 3, 3, 2 * Math.PI, 0, 2 * Math.PI);
+                		ctx.fill();
+                	}
+                	else
+                	{
+						var contentWidth = node.getWidth(text);
+						var contentHeight = node.getHeight(text);
+						var boxWidth = contentWidth + paddingX;
+						var boxHeight = contentHeight + paddingY;
+                		ctx.fillRect(s.x - boxWidth / 2, s.y - boxHeight / 2, boxWidth, boxHeight);
+						ctx.textAlign = "left";
+						ctx.textBaseline = "top";
+						ctx.font = (node.data.font !== undefined) ? node.data.font : nodeFont;
+						ctx.fillStyle = (node.data.color !== undefined) ? node.data.color : "#000000";
+						ctx.fillText(text, s.x - contentWidth / 2, s.y - contentHeight / 2);
+					}
                 } else {
+					var contentWidth = node.getWidth(text);
+					var contentHeight = node.getHeight(text);
+					var boxWidth = contentWidth + paddingX;
+					var boxHeight = contentHeight + paddingY;
+                	ctx.fillRect(s.x - boxWidth / 2, s.y - boxHeight / 2, boxWidth, boxHeight);
                     // Currently we just ignore any names if the image object is set. One might want to extend this logic to allow for both, or other composite nodes.
                     var src = node.data.image.src; // There should probably be a sanity check here too, but un-src-ed images aren't exaclty a disaster.
                     if (src in nodeImages) {

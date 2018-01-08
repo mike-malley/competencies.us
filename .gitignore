@@ -10,3 +10,17 @@ target
 *.salt
 *.pem
 *.secret
+
+src/main/webapp/WEB-INF/classes/
+
+src/main/webapp/WEB-INF/lib/
+
+src/main/js/cass/
+
+src/main/js/competencies/
+
+src/main/js/competencies\.us\.js
+
+src/main/js/stjs\.js
+
+docs/WEB-INF/

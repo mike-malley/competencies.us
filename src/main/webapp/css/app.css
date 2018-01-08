@@ -708,3 +708,42 @@ li.cass-competency-level:before {
 	display:inline;
 	
 }
+
+.frameworkWorkspaceTabBtn{
+    height:100%;
+    cursor:pointer;
+}
+
+.frameworkWorkspaceTabBtn:hover{
+    background-color:#f7f7f7;
+    box-shadow:1px -2px 4px 2px #f7f7f7;
+    font-weight: bold;
+}
+
+.frameworkWorkspaceTabBtn.active{
+    background-color:#e1f0fd;
+    box-shadow:-1px -2px 4px 2px #e1f0fd;
+    font-weight: bold;
+}
+
+.frameworkWorkspaceTabBtn.active:hover{
+      background-color:#e1f0fd;
+      box-shadow:-1px -2px 4px 2px #e1f0fd;
+}
+
+.frameworkListFramework:hover{
+	box-shadow: #f7f7ef -1px 2px 6px 3px;
+	background-color: #f7f7ef;
+	cursor:pointer;
+}
+
+#newFrameworkDropdown{
+	width:200px;
+	padding:0px;
+}
+
+#newFrameworkDropdown li{
+	padding:0.5rem 1rem;;	
+}
+
+
