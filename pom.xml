@@ -194,6 +194,7 @@
 								<jsSourceFile>src/main/js/cass/cass.import.js</jsSourceFile>
 								<jsSourceFile>src/main/js/cass/cass.adapter.js</jsSourceFile>
 								<jsSourceFile>src/main/js/cass/cass.rollup.js</jsSourceFile>
+								<jsSourceFile>src/main/js/cass/ec.ui.framework.js</jsSourceFile>
 							</jsSourceFiles>
 							<closureLanguageIn>ECMASCRIPT6</closureLanguageIn>
 							<closureLanguageOut>ECMASCRIPT5</closureLanguageOut>
@@ -202,6 +203,7 @@
 							<jsTargetDir>src/main/webapp/generated-js</jsTargetDir>
 							<jsFinalFile>cass.js</jsFinalFile>
 							<jsEngine>CLOSURE</jsEngine>
+							<skipMinify>true</skipMinify>
 						</configuration>
 						<goals>
 							<goal>minify</goal>
@@ -226,8 +228,10 @@
 							<cssSourceFiles>
 							</cssSourceFiles>
 							<jsSourceDir>.</jsSourceDir>
+							<jsSourceFiles>
+								<jsSourceFile>src/main/js/competencies.us.js</jsSourceFile>
+							</jsSourceFiles>
 							<jsSourceIncludes>
-								<jsSourceInclude>src/main/js/competencies.us</jsSourceInclude>
 								<jsSourceInclude>src/main/js/other/**/*</jsSourceInclude>
 								<jsSourceInclude>src/main/js/modal/**/*</jsSourceInclude>
 								<jsSourceInclude>src/main/js/screen/**/*</jsSourceInclude>
@@ -236,9 +240,11 @@
 							<closureLanguageOut>ECMASCRIPT5</closureLanguageOut>
 							<webappSourceDir>${basedir}</webappSourceDir>
 							<webappTargetDir>${basedir}</webappTargetDir>
+							<closureSortDependencies>false</closureSortDependencies>
 							<jsTargetDir>src/main/webapp/generated-js</jsTargetDir>
 							<jsFinalFile>competencies.us.js</jsFinalFile>
 							<jsEngine>CLOSURE</jsEngine>
+							<skipMinify>true</skipMinify>
 						</configuration>
 						<goals>
 							<goal>minify</goal>
@@ -254,6 +260,13 @@
 					<filesets>
 						<fileset>
 							<directory>src/main/webapp/generated-js</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>docs</directory>
 							<includes>
 								<include>**/*</include>
 							</includes>

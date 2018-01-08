@@ -23,6 +23,7 @@ var CreateUserModal = (function(CreateUserModal){
 		var server = $("#createServer").val();
 
 		AppController.serverController.selectServer(server,function(){
+
 			AppController.loginController.create(
 					$("#createUsername").val(),
 					$("#createPassword").val(),
