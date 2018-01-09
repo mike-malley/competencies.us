@@ -78,7 +78,8 @@ public class ServerController {
 		}
 
 		Object cachedList = storageSystem.getStoredValue("cass.server.list");
-		cachedList = Global.JSON.parse((String) cachedList);
+		if (cachedList != null)
+			cachedList = Global.JSON.parse((String) cachedList);
 		if (cachedList == null)
 			cachedList = new Object();
 

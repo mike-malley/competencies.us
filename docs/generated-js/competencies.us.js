@@ -1281,7 +1281,8 @@ function(storageSystem, defaultServer, defaultServerName) {
         }, function(o) {});
     }
     var cachedList = storageSystem.getStoredValue("cass.server.list");
-    cachedList = JSON.parse(cachedList);
+    if (cachedList != null) 
+        cachedList = JSON.parse(cachedList);
     if (cachedList == null) 
         cachedList = new Object();
     var repos = {};
