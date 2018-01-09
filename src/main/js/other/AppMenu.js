@@ -269,7 +269,8 @@ var AppMenu = (function (AppMenu) {
 
     }
 
-    function attemptLogin(){
+    function attemptLogin(event){
+    	event.preventDefault();
         var userId = $("#appMenuLoginUser").val();
         var password = $("#appMenuLoginPass").val();
         var server = $("#sessionLoginSelect").val();
@@ -304,6 +305,8 @@ var AppMenu = (function (AppMenu) {
                 $("#appMenuLoginUser").removeAttr("disabled").val("");
                 $("#appMenuLoginPass").removeAttr("disabled").val("");
                 $("#sessionLoginSelect").find("option").not("[value]").prop("selected", "true");
+
+				ScreenManager.reloadCurrentScreen();
             });
         }, function(err){
             $("#appMenuLoginUser").addClass("error");
@@ -312,7 +315,10 @@ var AppMenu = (function (AppMenu) {
             $("#appMenuLoginSpinner").addClass("hide");
             $("#appMenuLoginUser").removeAttr("disabled");
             $("#appMenuLoginPass").removeAttr("disabled");
+
+			ScreenManager.reloadCurrentScreen();
         });
+
     }
 
     function setupMenuButtons(){
