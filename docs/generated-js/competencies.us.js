@@ -2935,7 +2935,7 @@ var AddFieldModal = (function(AddFieldModal){
 				if(fieldName != "" )
 				{
 					ViewManager.getView("#addFieldMessageContainer").clearAlert("emptyText");
-					if(addingTo.find("[field="+fieldName+"]").size() > 0){
+					if(addingTo.find("[field="+fieldName+"]").length > 0){
 						ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 					}else{
 						dataEdit.addField(addingTo, fieldName, "value");
@@ -2958,7 +2958,7 @@ var AddFieldModal = (function(AddFieldModal){
 				if(fieldName != "")
 				{
 					ViewManager.getView("#addFieldMessageContainer").clearAlert("emptyArr");
-					if(addingTo.find("[field="+fieldName+"]").size() > 0){
+					if(addingTo.find("[field="+fieldName+"]").length > 0){
 						ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 					}else{
 						dataEdit.addField(addingTo, fieldName, new Array());
@@ -2983,7 +2983,7 @@ var AddFieldModal = (function(AddFieldModal){
 				if(fieldName != "" || addingTo.children("ul").length > 0)
 				{
 					ViewManager.getView("#addFieldMessageContainer").clearAlert("emptyObj");
-					if(fieldName != "" && addingTo.find("[field="+fieldName+"]").size() > 0 && addingTo.children("ul").length == 0){
+					if(fieldName != "" && addingTo.find("[field="+fieldName+"]").length > 0 && addingTo.children("ul").length == 0){
 						ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 						return;
 					}
@@ -2991,7 +2991,7 @@ var AddFieldModal = (function(AddFieldModal){
 					$("#typeSelectRow").removeClass("hide");
 					
 					$("#addBtn").click(function(){
-						if(fieldName != "" && addingTo.find("[field="+fieldName+"]").size() > 0){	
+						if(fieldName != "" && addingTo.find("[field="+fieldName+"]").length > 0){
 							ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 						}
 						
@@ -3057,7 +3057,7 @@ var AddOwnerModal = (function(AddOwnerModal){
 		var ownerElements = addingTo.children("div").children("[field='@owner']").find("ul").find(".identityDisplay");
 		
 		var owners = [];
-		for(var i = 0; i < ownerElements.size(); i++){
+		for(var i = 0; i < ownerElements.length; i++){
 			var el = ownerElements.get(i);
 			var pk = $(el).attr("data-pk")
 			owners.push(pk)
@@ -3359,7 +3359,7 @@ var AddToFrameworkModal = (function(AddToFrameworkModal){
 				}
 			}
 			
-			if($("#addToFrameworkList option").size() == 0){
+			if($("#addToFrameworkList option").length == 0){
 				$("#addToFrameworkList").append("<option selected>Unable to add to any Frameworks</option>");
 				$("#addToFrameworkList").attr("disabled", "disabled");
 				
@@ -3446,7 +3446,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 		else
 			pk = contact.ppk.toPk();
 
-		if($("#advancedPermissionsOwners option").size() == 1){
+		if($("#advancedPermissionsOwners option").length == 1){
 			$("#noOwners").addClass("hide");
 			$("#advancedPermissionsOwners").removeClass("empty");
 			$("#advancedPermissionsOwners").removeAttr("disabled");
@@ -3476,7 +3476,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 		else
 			pk = contact.ppk.toPk();
 
-		if($("#advancedPermissionsReaders option").size() == 1){
+		if($("#advancedPermissionsReaders option").length == 1){
 			$("#noReaders").addClass("hide");
 			$("#advancedPermissionsReaders").removeClass("empty");
 			$("#advancedPermissionsReaders").removeAttr("disabled");
@@ -3722,7 +3722,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 			
 			if(!onlyReaders){
 				$("#privateSwitch").change(function(){
-					if($("#advancedPermissionsOwners option").size() == 1 && $("#advancedPermissionsOwners").attr("disabled") == "disabled"){
+					if($("#advancedPermissionsOwners option").length == 1 && $("#advancedPermissionsOwners").attr("disabled") == "disabled"){
 						$("#privateSwitch").prop("checked", false)
 						ViewManager.getView("#advancedPermissionsMessageContainer").displayAlert("Cannot encrypt a publicly owned object", "publicPrivate");
 						return;
@@ -3807,7 +3807,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 			
 			$("#advancedPermissionsDeleteOwner").click(function(){
 				$("#advancedPermissionsOwners option[value='"+$("#advancedPermissionsOwners").val()+"']").remove();
-				if($("#advancedPermissionsOwners option").size() == 1){
+				if($("#advancedPermissionsOwners option").length == 1){
 					$("#noOwners").removeClass("hide")
 					$("#advancedPermissionsOwners").attr("disabled", "disabled");
 					$("#advancedPermissionsOwners").addClass("empty");
@@ -3848,7 +3848,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 			
 			$("#advancedPermissionsDeleteReader").click(function(){
 				$("#advancedPermissionsReaders option[value='"+$("#advancedPermissionsReaders").val()+"']").remove();
-				if($("#advancedPermissionsReaders option").size() == 1){
+				if($("#advancedPermissionsReaders option").length == 1){
 					$("#noReaders").removeClass("hide")
 					$("#advancedPermissionsReaders").attr("disabled", "disabled");
 					$("#advancedPermissionsReaders").addClass("empty");
@@ -4905,7 +4905,7 @@ var AppMenu = (function (AppMenu) {
 	 */
 	function buildCompetencyItem(compId){
 		compId = EcRemoteLinkedData.trimVersionFromUrl(compId);
-		if($("#appMenuRecentList li[data-id='"+compId+"']").size() == 0){
+		if($("#appMenuRecentList li[data-id='"+compId+"']").length == 0){
 			EcCompetency.get(compId, function(comp){
 				var recentListItem = $("<li data-recent='competency'><a></a></li>")
 				recentListItem.attr("data-id", compId);
@@ -4958,7 +4958,7 @@ var AppMenu = (function (AppMenu) {
 	 */
 	function buildFrameworkItem(frameworkId){
 		frameworkId = EcRemoteLinkedData.trimVersionFromUrl(frameworkId);
-		if($("#appMenuRecentList li[data-id='"+frameworkId+"']").size() == 0){
+		if($("#appMenuRecentList li[data-id='"+frameworkId+"']").length == 0){
 			EcFramework.get(frameworkId, function(framework){
 				var recentListItem = $("<li data-recent='framework'><a></a></li>")
 				recentListItem.attr("data-id", frameworkId);
@@ -5653,7 +5653,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 	    if(assertion.agent != undefined){
 	    	$("#assertionAgentInput option").removeAttr("selected");
 		    var agentOption = $("#assertionAgentInput option[value='"+assertion.getAgent().toPem()+"']");
-		    if(agentOption.size() != 1)
+		    if(agentOption.length != 1)
 		    	$("#assertionAgentInput").append($("<option selected>Unknown</option>"));
 		    else
 		    	agentOption.attr("selected","selected");
@@ -5666,7 +5666,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 	    	var subjectOption = $("#assertionSubjectInput option[value='"+assertion.getSubject().toPem()+"']");
 	    	
 	    	$("#assertionSubjectInput option").removeAttr("selected");
-	    	if(subjectOption.size() == 1){
+	    	if(subjectOption.length == 1){
 	    		subjectOption.attr("selected", "selected");
 	    	}else{
 	    		var option = $("<option selected='selected'>Unknown Subject</option>");
@@ -5680,13 +5680,13 @@ AssertionEditScreen = (function(AssertionEditScreen){
 	    	var competencyOption = $("#assertionCompetencyInput option[value='"+assertion.competency+"']");
 	    	
 	    	$("#assertionCompetencyInput option").removeAttr("selected");
-	    	if(competencyOption.size() == 1){
+	    	if(competencyOption.length == 1){
 	    		competencyOption.attr("selected", "selected");
 	    	}else{
 	    		EcCompetency.get(assertion.competency, function(competency){
 	    			var competencyOption = $("#assertionCompetencyInput option[value='"+EcRemoteLinkedData.trimVersionFromUrl(competency.id)+"']");
 	    			
-	    			if(competencyOption.size() > 0){
+	    			if(competencyOption.length > 0){
 	    				competencyOption.attr("selected", "selected");
 	    			}else{
 	    				var option = $("<option></option>");
@@ -5713,7 +5713,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 		    	var levelOption = $("#assertionLevelInput option[value='"+assertion.level+"']");
 		    	
 		    	$("#assertionLevelInput option").removeAttr("selected");
-		    	if(levelOption.size() == 1){
+		    	if(levelOption.length == 1){
 		    		levelOption.attr("selected", "selected");
 		    	}else{
 		    		var option = $("<option selected='selected'>Unknown Level</option>");
@@ -5883,7 +5883,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 				
 				var competencyOption = $("#assertionCompetencyInput option[value='"+EcRemoteLinkedData.trimVersionFromUrl(competencies[i].id)+"']")
 				
-				if(competencyOption.size() > 0){
+				if(competencyOption.length > 0){
 					competencyOption.attr("selected", "selected");
 				}else{
 					var option = $("<option></option>");
@@ -6309,7 +6309,7 @@ AssertionSearchScreen = (function (AssertionSearchScreen) {
     	ViewManager.getView("#menuContainer").showSortBasic();
         ViewManager.getView("#assertionSearchResults").populate(results);
 
-        if (results.length == 0 && $("#assertionResults-data").first().children().size() == 0) {
+        if (results.length == 0 && $("#assertionResults-data").first().children().length == 0) {
             ViewManager.getView("#assertionSearchResults").showNoDataMessage();
         } else if (results.length < maxLength) {
             $("#moreSearchResults").addClass("hide");
@@ -6318,7 +6318,7 @@ AssertionSearchScreen = (function (AssertionSearchScreen) {
             $("#getMoreResults").click(function () {
                 $("#getMoreResults").addClass("hide");
                 $("#loadingMoreResults").removeClass("hide");
-                runAssertionSearch($("#assertionResults-data").first().children().size());
+                runAssertionSearch($("#assertionResults-data").first().children().length);
             })
 
             $("#getMoreResults").removeClass("hide");
@@ -6337,14 +6337,14 @@ AssertionSearchScreen = (function (AssertionSearchScreen) {
     function scrollSearchHandler(){
     	var resultDiv = $("#assertionResults-data").first(); 
     	
-    	if(resultDiv.size() == 0){
+    	if(resultDiv.length == 0){
     		$(window).off("scroll", scrollSearchHandler);
     	}
     	else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
     	{
     		//$("#moreSearchResults").addClass("hide");
     		//$("#loadingMoreResults").removeClass("hide");
-    		runAssertionSearch(resultDiv.children().size());
+    		runAssertionSearch(resultDiv.children().length);
     	}
     }
     */
@@ -6908,7 +6908,7 @@ var ChangeServerModal = (function (ChangeServerModal) {
         $("#changeServerCurrentServer").text(AppController.serverController.selectedServerName);
         $("#changeServerCurrentServer").attr('title', AppController.serverController.selectedServerUrl);
 
-        if ($(AppController.serverController.serverList).size() > 0) {
+        if ($(AppController.serverController.serverList).length > 0) {
             $("#newServer").html("");
             for (var serverName in AppController.serverController.serverList) {
                 var serverUrl = AppController.serverController.serverList[serverName];
@@ -7214,7 +7214,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
         tip += level.id;
 
-        if ($("#competencyLevelContainer").children("span").size() > 0)
+        if ($("#competencyLevelContainer").children("span").length > 0)
             $("#competencyLevelContainer").append(", ");
 
         $("#competencyLevelContainer").append(container);
@@ -7232,7 +7232,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
                 if (level != null)
                     addLevel(level)
-                else if ($("#competencyLevelContainer").find(".level").size() == 0)
+                else if ($("#competencyLevelContainer").find(".level").length == 0)
                     $("#competencyNoLevels").removeClass("hide");
             }));
         });
@@ -7278,7 +7278,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
         tip += rollupRule.id;
 
-        if ($("#competencyRollupRuleContainer").children("span").size() > 0)
+        if ($("#competencyRollupRuleContainer").children("span").length > 0)
             $("#competencyRollupRuleContainer").append(", ");
 
         $("#competencyRollupRuleContainer").append(container);
@@ -7295,7 +7295,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
                 if (rollupRule != null)
                     addRollupRule(rollupRule)
-                else if ($("#competencyRollupRuleContainer").find("span").size() == 0)
+                else if ($("#competencyRollupRuleContainer").find("span").length == 0)
                     $("#competencyNoRollupRules").removeClass("hide");
             }));
         });
@@ -7708,7 +7708,7 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 		ViewManager.getView("#competencySearchResults").populate(results);
 		
 		
-		if(results.length == 0 && $("#competencyResults-data").first().children().size() == 0)
+		if(results.length == 0 && $("#competencyResults-data").first().children().length == 0)
 		{
 			ViewManager.getView("#competencySearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
@@ -7718,7 +7718,7 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runCompetencySearch($("#competencyResults-data").first().children().size());
+				runCompetencySearch($("#competencyResults-data").first().children().length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -7735,14 +7735,14 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 	function scrollSearchHandler(){
 		var resultDiv = $("#competencyResults-data").first(); 
 		
-		if(resultDiv.children().size() == 0){
+		if(resultDiv.children().length == 0){
 			$(window).off("scroll", scrollSearchHandler);
 		}
 		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 		{
 			//$("#moreSearchResults").addClass("hide");
 			//$("#loadingMoreResults").removeClass("hide");
-			runCompetencySearch(resultDiv.children().size() );
+			runCompetencySearch(resultDiv.children().length );
 		}
 	}
 	*/
@@ -8570,7 +8570,7 @@ var CreateUserModal = (function(CreateUserModal){
 	{
 		ViewManager.showView(new MessageContainer("createUser"), "#createMessageContainer");
 
-		if($(AppController.serverController.serverList).size() > 0 ){
+		if($(AppController.serverController.serverList).length > 0 ){
 			$("#createServer").html("");
 		}
 		for(var serverName in AppController.serverController.serverList){
@@ -8865,7 +8865,7 @@ var DataViewer = (function(DataViewer){
 				return;
 			}
 			
-			if($("#"+prefix+"-data .row").size() == 0){
+			if($("#"+prefix+"-data .row").length == 0){
 				for(var i in self.dataStore){
 					delete self.dataStore[i];
 				}
@@ -8891,7 +8891,7 @@ var DataViewer = (function(DataViewer){
 				return;
 			}
 			
-			if($("#"+prefix+"-data .row").size() == 0){
+			if($("#"+prefix+"-data .row").length == 0){
 				for(var i in self.dataStore){
 					delete self.dataStore[i];
 				}
@@ -8935,7 +8935,7 @@ var DataViewer = (function(DataViewer){
 	 */
 	function buildData(id, datum, prefix, callbacks, self){
 		var row;
-		if($(".row[data-id='"+id+"']").size() == 0){
+		if($(".row[data-id='"+id+"']").length == 0){
 			row = $("<div class='row column' style='padding:7px 2px;padding-left:40px;'></div>");
 		}else{
 			return;
@@ -8964,7 +8964,7 @@ var DataViewer = (function(DataViewer){
 				callbacks["clickDataSelect"](ev, id, datum, prefix);
 			}
 			
-			if($(".dataView").find(".datum-select:checked").size() == $("#"+prefix+"-data .row").size()){
+			if($(".dataView").find(".datum-select:checked").length == $("#"+prefix+"-data .row").length){
 				$(".toggleSelectData").text("Unselect All");
 			}else{
 				$(".toggleSelectData").text("Select All");
@@ -9012,7 +9012,7 @@ var DataViewer = (function(DataViewer){
 					$("#"+prefix+"-menu").slideDown();
 				}
 				
-				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 			}else{
 				$(ev.target).closest(".dataView").removeClass("selecting");
 				
@@ -9091,7 +9091,7 @@ var DataViewer = (function(DataViewer){
 					
 					row.remove();
 					
-					if(siblings.size() == 0){
+					if(siblings.length == 0){
 						showNoDataMessage(prefix);
 						$(".toggleSelectData").addClass("hide");
 					}
@@ -9132,7 +9132,7 @@ var DataViewer = (function(DataViewer){
 			
 			var moreActions = callbacks["moreRowTools"](datum);
 			
-			if(moreActions != undefined && moreActions != "" && $(moreActions).size() > 0){
+			if(moreActions != undefined && moreActions != "" && $(moreActions).length > 0){
 				element.append(more);
 				
 				element.find(".fa-ellipsis-v").click(function(ev){
@@ -9349,7 +9349,7 @@ var DataViewer = (function(DataViewer){
 						EcRepository._delete(datum, function(){
 							$("#"+prefix+"-data").find(".row[data-id='"+id+"']").remove();
 							
-							if($("#"+prefix+"-data").find(".row").size() == 0){
+							if($("#"+prefix+"-data").find(".row").length == 0){
 								showNoDataMessage(prefix);
 								$(".toggleSelectData").addClass("hide");
 							}
@@ -9416,7 +9416,7 @@ var DataViewer = (function(DataViewer){
 			
 			var moreActions = callbacks["moreMenuTools"](prefix);
 			
-			if(moreActions != undefined && moreActions != "" && $(moreActions).size() > 0){
+			if(moreActions != undefined && moreActions != "" && $(moreActions).length > 0){
 				row.find("#moreMenuBtns").removeClass("hide");
 				
 				list.append(moreActions);
@@ -9539,7 +9539,7 @@ var DataViewer = (function(DataViewer){
 		
 		
 		$(".toggleSelectData").click(function(){
-			if($(".dataView").find(".datum-select:checked").size() == $("#"+prefix+"-data .row").size()){
+			if($(".dataView").find(".datum-select:checked").length == $("#"+prefix+"-data .row").length){
 				deselectAll(prefix);
 				$(".toggleSelectData").text("Select All");
 			}else{
@@ -9549,7 +9549,7 @@ var DataViewer = (function(DataViewer){
 				
 				$(".dataView .datum-select").prop("checked", true);
 				
-				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 				
 				if(!$("#"+prefix+"-menu").is(":visible") && menu != undefined){
 					$("#"+prefix+"-menu").slideDown();
@@ -9607,7 +9607,7 @@ var DataViewer = (function(DataViewer){
 		
 		if(dataSize > 0){
 			populateData(data, this, this.prefix, this.callbacks);
-		}else if($("#"+this.prefix+"-data").find(".row").size() == 0){
+		}else if($("#"+this.prefix+"-data").find(".row").length == 0){
 			showNoDataMessage(this.prefix);
 		}
 	}
@@ -11025,7 +11025,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
 
 
         var competencyGroup = $("#frameworkEditRelations optgroup#" + sourceId);
-        if (competencyGroup.size() == 0) {
+        if (competencyGroup.length == 0) {
             competencyGroup = $("<optgroup></optgroup>");
             competencyGroup.attr("id", sourceId);
             competencyGroup.attr("label", EcCompetency.getBlocking(relation.source).getName())
@@ -11069,7 +11069,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
 
         var competencyGroup = $("#frameworkEditLevels optgroup#" + competencyId);
 
-        if (competencyGroup.size() == 0) {
+        if (competencyGroup.length == 0) {
             competencyGroup = $("<optgroup></optgroup>");
             competencyGroup.attr("id", competencyId);
             competencyGroup.attr("label", competency.getName());
@@ -11115,7 +11115,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
 
         var competencyGroup = $("#frameworkEditRollupRules optgroup#" + competencyId);
 
-        if (competencyGroup.size() == 0) {
+        if (competencyGroup.length == 0) {
             competencyGroup = $("<optgroup></optgroup>");
             competencyGroup.attr("id", competencyId);
             competencyGroup.attr("label", competency.getName());
@@ -11792,7 +11792,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
             }
 
             $("#frameworkEditRelations optgroup").each(function (idx, el) {
-                if ($(el).children().size() == 0)
+                if ($(el).children().length == 0)
                     $(el).remove();
             });
 
@@ -11827,7 +11827,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
             }
 
             $("#frameworkEditLevels optgroup").each(function (idx, el) {
-                if ($(el).children().size() == 0)
+                if ($(el).children().length == 0)
                     $(el).remove();
             })
 
@@ -11862,7 +11862,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
             }
 
             $("#frameworkEditRollupRules optgroup").each(function (idx, el) {
-                if ($(el).children().size() == 0)
+                if ($(el).children().length == 0)
                     $(el).remove();
             });
         });
@@ -12076,7 +12076,7 @@ var FrameworkList = (function(FrameworkList){
 	                	
 	                    EcAlignment.get(framework.relation[i], function (rel) {
 	                    	(retry = function(){
-	                    		if($(".competency[data-id='"+rel.source+"']").size() > 0)
+	                    		if($(".competency[data-id='"+rel.source+"']").length > 0)
 		                    		addRelation(rel, framework);
 		                    	else
 		                    		setTimeout(retry, 100);
@@ -12099,7 +12099,7 @@ var FrameworkList = (function(FrameworkList){
 	                	
 	                    EcLevel.get(framework.level[i], function (level) {
 	                    	(retry = function(){
-	                    		if($(".competency[data-id='"+level.competency+"']").size() > 0)
+	                    		if($(".competency[data-id='"+level.competency+"']").length > 0)
 		                    		addLevel(level);
 		                    	else
 		                    		setTimeout(retry, 100);
@@ -12120,7 +12120,7 @@ var FrameworkList = (function(FrameworkList){
 	                	
 	                    EcRollupRule.get(framework.rollupRule[i], function (rule) {
 	                    	(retry = function(){
-	                    		if($(".competency[data-id='"+rule.competency+"']").size() > 0)
+	                    		if($(".competency[data-id='"+rule.competency+"']").length > 0)
 		                    		addRollup(rule);
 		                    	else
 		                    		setTimeout(retry, 100);
@@ -12285,7 +12285,7 @@ var FrameworkList = (function(FrameworkList){
 		
 		$("[data-id='"+level.competency+"'] .competencyLevels").append(element);
 		
-		var count = $("[data-id='"+level.competency+"'] .competencyLevels").find(".level").size();
+		var count = $("[data-id='"+level.competency+"'] .competencyLevels").find(".level").length;
 		$("[data-id='"+level.competency+"'] .levelCount").text("( "+count+" )");
 	}
 	
@@ -12316,7 +12316,7 @@ var FrameworkList = (function(FrameworkList){
 
 		$("[data-id='"+rule.competency+"'] .rollupRules").append(element);
 		
-		var count = $("[data-id='"+rule.competency+"'] .rollupRules").find(".rollupRule").size();
+		var count = $("[data-id='"+rule.competency+"'] .rollupRules").find(".rollupRule").length;
 		$("[data-id='"+rule.competency+"'] .ruleCount").text("( "+count+" )");
 	}
 	
@@ -12365,7 +12365,7 @@ var FrameworkList = (function(FrameworkList){
 						
 						var first = $("#frameworkList .competency").first();
 						if(first.text().toLowerCase().indexOf(text) == 0){
-							if(first.find(".competencyRelations .relation").size() >= $(el).find(".competencyRelations .relation").size()){
+							if(first.find(".competencyRelations .relation").length >= $(el).find(".competencyRelations .relation").length){
 								first.after(el);
 							}else{
 								$("#frameworkList").prepend(el);
@@ -12420,7 +12420,7 @@ var FrameworkList = (function(FrameworkList){
 		})
 		
 		$(".competency").not(compEl).each(function(idx, el){
-			if($(el).find("[data-id='"+competencyId+"']").size() > 0){
+			if($(el).find("[data-id='"+competencyId+"']").length > 0){
 				var parent = $(el).parent();
 				$(el).remove();
 				compEl.after(el);
@@ -12563,7 +12563,7 @@ FrameworkSearchScreen = (function(FrameworkSearchScreen){
 		ViewManager.getView("#menuContainer").showSortBasic();
 		ViewManager.getView("#frameworkSearchResults").populate(results);
 		
-		if(results.length == 0 && $("#frameworkResults-data").first().children().size() == 0){
+		if(results.length == 0 && $("#frameworkResults-data").first().children().length == 0){
 			ViewManager.getView("#frameworkSearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
 			$("#moreSearchResults").addClass("hide");
@@ -12572,7 +12572,7 @@ FrameworkSearchScreen = (function(FrameworkSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runFrameworkSearch($("#frameworkResults-data").first().children().size());
+				runFrameworkSearch($("#frameworkResults-data").first().children().length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -12588,14 +12588,14 @@ FrameworkSearchScreen = (function(FrameworkSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#frameworkResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runFrameworkSearch(resultDiv.children().size());
+//			runFrameworkSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -14375,7 +14375,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 		
 		ViewManager.getView("#levelSearchResults").populate(results);
 		
-		if(results.length == 0 && $("#levelResults-data").first().children().size() == 0)
+		if(results.length == 0 && $("#levelResults-data").first().children().length == 0)
 		{
 			ViewManager.getView("#levelSearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
@@ -14385,7 +14385,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runRelationshipSearch($("#levelResults-data .row[data-id]").size());
+				runRelationshipSearch($("#levelResults-data .row[data-id]").length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -14401,14 +14401,14 @@ LevelSearchScreen = (function(LevelSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#levelResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runRelationshipSearch(resultDiv.children().size());
+//			runRelationshipSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -14485,14 +14485,14 @@ LevelSearchScreen = (function(LevelSearchScreen){
 				var aggregatedRows = row.siblings("[data-aggregateId='"+aggId+"']");
 				
 				if($(ev.target).is(":checked")){
-					if(aggregatedRows.find(".datum-select:checked").size() == aggregatedRows.size()){
+					if(aggregatedRows.find(".datum-select:checked").length == aggregatedRows.length){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("checked", "checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", true);
 					}
 				}else{
-					if(aggregatedRows.find(".datum-select:checked").size() == 0){
+					if(aggregatedRows.find(".datum-select:checked").length == 0){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").removeAttr("checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
@@ -14544,7 +14544,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 					
 					var competencyRow;
 					
-					if($("#levelSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").size() == 0){
+					if($("#levelSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").length == 0){
 						$("#levelSearchResults #"+dataViewPrefix+"-data").append("<div class='row column competencyAggregateRow' data-competencyId='"+shortCompId+"'></div>");
 						
 						competencyRow = $("#levelSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']")
@@ -14552,7 +14552,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 						competencyRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						competencyRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -14609,7 +14609,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -14673,9 +14673,9 @@ LevelSearchScreen = (function(LevelSearchScreen){
 						competencyRow = $("#levelSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']");
 					}
 					
-					if(competencyRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(competencyRow.nextAll(".competencyAggregateRow").length > 0){
 						competencyRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(competencyRow.nextAll(".row").size() > 0){
+					}else if(competencyRow.nextAll(".row").length > 0){
 						competencyRow.nextAll(".row").last().after(row);
 					}else{
 						competencyRow.after(row);
@@ -14687,7 +14687,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 					
 					var unknownAggregateRow;
 					
-					if($("#levelSearchResults .competencyAggregateRow[data-competencyId=unknown]").size() == 0){
+					if($("#levelSearchResults .competencyAggregateRow[data-competencyId=unknown]").length == 0){
 						$("#levelSearchResults #"+dataViewPrefix+"-data").prepend("<div class='row column competencyAggregateRow' data-competencyId='unknown'></div>");
 						
 						unknownAggregateRow = $("#levelSearchResults .competencyAggregateRow[data-competencyId='unknown']")
@@ -14695,7 +14695,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 						unknownAggregateRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						unknownAggregateRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -14752,7 +14752,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -14770,9 +14770,9 @@ LevelSearchScreen = (function(LevelSearchScreen){
 						unknownAggregateRow = $("#levelSearchResults .competencyAggregateRow[data-competencyId='unknown']");
 					}
 					
-					if(unknownAggregateRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(unknownAggregateRow.nextAll(".competencyAggregateRow").length > 0){
 						unknownAggregateRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(unknownAggregateRow.nextAll(".row").size() > 0){
+					}else if(unknownAggregateRow.nextAll(".row").length > 0){
 						unknownAggregateRow.nextAll(".row").last().after(row);
 					}else{
 						unknownAggregateRow.after(row);
@@ -14810,7 +14810,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 						row.find(".datum-owner").append(ownerEl);
 						
 						var timeoutFunc = function(){
-							if($("#"+elId).size() > 0){
+							if($("#"+elId).length > 0){
 								ViewManager.showView(new IdentityDisplay(datum["owner"][i]), "#"+elId)
 							}else{
 								setTimeout(timeoutFunc, 500);
@@ -14822,7 +14822,7 @@ LevelSearchScreen = (function(LevelSearchScreen){
 					}
 				}
 				
-				if(row.find(".datum-competency").size() > 0){
+				if(row.find(".datum-competency").length > 0){
 					EcCompetency.get(datum.competency, function(competency){
 						row.find(".datum-competency").html("on <span style='font-style:italic;'></span>");
 						row.find(".datum-competency span").text(competency.getName());
@@ -15007,7 +15007,7 @@ var LoginModal = (function (LoginModal) {
                 ViewManager.getView("#loginMessageContainer").displayWarning(warning);
         });
 
-        if ($(AppController.serverController.serverList).size() > 0) {
+        if ($(AppController.serverController.serverList).length > 0) {
             $("#loginServer").html("");
         }
         for (var serverName in AppController.serverController.serverList) {
@@ -15115,7 +15115,7 @@ var MessageContainer = (function(MessageContainer){
 	function clearMessage(containerId, msgId){
 		var messages = $(containerId+"Messages");
 		
-		if(msgId == undefined || (messages.find("[data-msg]").size() == 1 && messages.find("[data-msg='"+msgId+"']").size() == 1)){
+		if(msgId == undefined || (messages.find("[data-msg]").length == 1 && messages.find("[data-msg='"+msgId+"']").length == 1)){
 			hideMessageBox(containerId, function(){
 				messages.html("");
 			});
@@ -16016,7 +16016,7 @@ RelationshipEditScreen = (function(RelationshipEditScreen){
 		
 		if(relation != null && relation.relationType != null && relation.relationType != ""){
 			var currentOption = $("#relationEditType option[value='"+relation.relationType+"']");
-			if(currentOption.size() > 0){
+			if(currentOption.length > 0){
 				currentOption.attr("selected", "selected");
 			}else{
 				var typeDisplay = relation.relationType.split(/(?=[A-Z])/).join(" ");
@@ -16511,7 +16511,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 		
 		ViewManager.getView("#relationshipSearchResults").populate(results);
 		
-		if(results.length == 0 && $("#relationshipResults-data").first().children().size() == 0)
+		if(results.length == 0 && $("#relationshipResults-data").first().children().length == 0)
 		{
 			ViewManager.getView("#relationshipSearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
@@ -16521,7 +16521,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runRelationshipSearch($("#relationshipResults-data .row[data-id]").size());
+				runRelationshipSearch($("#relationshipResults-data .row[data-id]").length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -16537,14 +16537,14 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#relationshipResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runRelationshipSearch(resultDiv.children().size());
+//			runRelationshipSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -16657,14 +16657,14 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 				var aggregatedRows = row.siblings("[data-aggregateId='"+aggId+"']");
 				
 				if($(ev.target).is(":checked")){
-					if(aggregatedRows.find(".datum-select:checked").size() == aggregatedRows.size()){
+					if(aggregatedRows.find(".datum-select:checked").length == aggregatedRows.length){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("checked", "checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", true);
 					}
 				}else{
-					if(aggregatedRows.find(".datum-select:checked").size() == 0){
+					if(aggregatedRows.find(".datum-select:checked").length == 0){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").removeAttr("checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
@@ -16703,7 +16703,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					
 					var competencyRow;
 					
-					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").size() == 0){
+					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").length == 0){
 						$("#relationshipSearchResults #"+dataViewPrefix+"-data").append("<div class='row column competencyAggregateRow' data-competencyId='"+shortCompId+"'></div>");
 						
 						competencyRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']")
@@ -16711,7 +16711,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						competencyRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						competencyRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -16768,7 +16768,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -16832,9 +16832,9 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						competencyRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']");
 					}
 					
-					if(competencyRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(competencyRow.nextAll(".competencyAggregateRow").length > 0){
 						competencyRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(competencyRow.nextAll(".row").size() > 0){
+					}else if(competencyRow.nextAll(".row").length > 0){
 						competencyRow.nextAll(".row").last().after(row);
 					}else{
 						competencyRow.after(row);
@@ -16846,7 +16846,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					
 					var unknownAggregateRow;
 					
-					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId=unknown]").size() == 0){
+					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId=unknown]").length == 0){
 						$("#relationshipSearchResults #"+dataViewPrefix+"-data").prepend("<div class='row column competencyAggregateRow' data-competencyId='unknown'></div>");
 						
 						unknownAggregateRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='unknown']")
@@ -16854,7 +16854,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						unknownAggregateRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						unknownAggregateRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -16911,7 +16911,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -16929,9 +16929,9 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						unknownAggregateRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='unknown']");
 					}
 					
-					if(unknownAggregateRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(unknownAggregateRow.nextAll(".competencyAggregateRow").length > 0){
 						unknownAggregateRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(unknownAggregateRow.nextAll(".row").size() > 0){
+					}else if(unknownAggregateRow.nextAll(".row").length > 0){
 						unknownAggregateRow.nextAll(".row").last().after(row);
 					}else{
 						unknownAggregateRow.after(row);
@@ -16975,7 +16975,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						row.find(".datum-owner").append(ownerEl);
 						
 						var timeoutFunc = function(){
-							if($("#"+elId).size() > 0){
+							if($("#"+elId).length > 0){
 								ViewManager.showView(new IdentityDisplay(datum["owner"][i]), "#"+elId)
 							}else{
 								setTimeout(timeoutFunc, 500);
@@ -16987,7 +16987,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					}
 				}
 				
-				if(row.find(".datum-source").size() > 0){
+				if(row.find(".datum-source").length > 0){
 					EcCompetency.get(datum.source, function(competency){
 						row.find(".datum-source").text(competency.getName())
 					}, function(){
@@ -16996,7 +16996,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					row.find(".datum-source").text("Loading..");
 				}
 				
-				if(row.find(".datum-target").size() > 0){
+				if(row.find(".datum-target").length > 0){
 					EcCompetency.get(datum.target, function(competency){
 						row.find(".datum-target").text(competency.getName())
 					}, function(){
@@ -17006,7 +17006,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 				}
 				
 				var types;
-				if(row.find(".datum-target").size() == 0){
+				if(row.find(".datum-target").length == 0){
 					types = inverseTypes;
 				}else{
 					types = AppSettings.relationTypes;
@@ -17504,7 +17504,7 @@ var RepoEdit = (function(RepoEdit){
 	                    split[split.length-2] = guid();
 	                $(e).children("p").text(split.join("/"));
 	                
-	                if(i == $("#datum").find("[field='@id']").size() - 1)
+	                if(i == $("#datum").find("[field='@id']").length - 1)
 	                {
 	                	var obj = JSON.parse(serializeField($("#datum")));
 	                	
@@ -17718,7 +17718,7 @@ var RepoEdit = (function(RepoEdit){
 	    {
 	        if (field.children("label").text() == "@owner" || field.parent().parent().children("label").text() == "@owner")
 	        {
-	        	var id = "node-"+ownedNodes+"-owner-" + field.siblings("li").size();
+	        	var id = "node-"+ownedNodes+"-owner-" + field.siblings("li").length;
 	        	field.append("<span id='"+id+"' style='display:block;'></span>")
 	        	
 	        	
@@ -17908,9 +17908,9 @@ var RepoEdit = (function(RepoEdit){
 	 */
 	function serializeField(field,child)
 	{
-		if (field.children(".ownershipDisplay").size() == 1)
+		if (field.children(".ownershipDisplay").length == 1)
 	    	return field.children(".ownershipDisplay").attr("pk");
-		if (field.children("span").children(".identityDisplay").size() == 1)
+		if (field.children("span").children(".identityDisplay").length == 1)
 			return field.find(".identityDisplay").attr("data-pk");
 		else if(field.children("span").length == 1)
 			return field.find("input[type='checkbox']").prop("checked");
@@ -18341,12 +18341,12 @@ RepoSearchScreen = (function(RepoSearchScreen){
 			ownership = "all";
 		
 		var types = undefined;
-		if($("#repoSearchTypes input:checkbox:checked").size() != $("#repoSearchTypes input:checkbox").size())
+		if($("#repoSearchTypes input:checkbox:checked").length != $("#repoSearchTypes input:checkbox").length)
 		{
 			 types = $("#repoSearchTypes input:checkbox:checked").map(function(){
 			      return $(this).parent().attr('title');
 		    }).get();
-		}else if($("#repoSearchTypes input:checkbox:checked").size() == 0 && urlTypes != undefined){
+		}else if($("#repoSearchTypes input:checkbox:checked").length == 0 && urlTypes != undefined){
 			types = urlTypes;
 		}else{
 			types = undefined;
@@ -18406,7 +18406,7 @@ RepoSearchScreen = (function(RepoSearchScreen){
 				//ViewManager.getView("#repoSearchResults").showProgressMessage();
 				ViewManager.getView("#repoSearchResults").deselectAll();
 				
-				if($("#repoResults-data").first().children().size() == 0)
+				if($("#repoResults-data").first().children().length == 0)
 					ViewManager.getView("#repoSearchResults").showProgressMessage();
 				
 				var params = {};
@@ -18461,7 +18461,7 @@ RepoSearchScreen = (function(RepoSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runRepoSearch($("#repoResults-data").first().children().size());
+				runRepoSearch($("#repoResults-data").first().children().length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -18477,14 +18477,14 @@ RepoSearchScreen = (function(RepoSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#repoResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runRepoSearch(resultDiv.children().size());
+//			runRepoSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -18551,7 +18551,7 @@ RepoSearchScreen = (function(RepoSearchScreen){
 	 */
 	function displayTypes(typeObjects)
 	{
-		if($(typeObjects).size() == 0)
+		if($(typeObjects).length == 0)
 			errorDisplayingTypes("No Types Returned");
 		
 		$("#repoSearchTypes li.type").remove();
@@ -18617,16 +18617,16 @@ RepoSearchScreen = (function(RepoSearchScreen){
 			var checked = $("#repoSearchTypes input:checked");
 			
 			var typeText;
-			if(checked.size() == 0 || checked.size() == $("#repoSearchTypes input").size()){
+			if(checked.length == 0 || checked.length == $("#repoSearchTypes input").length){
 				typeText = "All";
 				$("#repoSearchTypes input:checkbox").prop('checked', true);
 				selectToggle.text("Deselect All");
 				$("#repoSearchTypesText").css("font-size", "normal");
-			}else if(checked.size() == 1){
+			}else if(checked.length == 1){
 				typeText = checked.closest("label").text();
 				$("#repoSearchTypesText").css("font-size", "normal");
 			}else{
-				typeText = checked.size() + " Types Selected";
+				typeText = checked.length + " Types Selected";
 				$("#repoSearchTypesText").css("font-size", "small");
 			}
 			
@@ -18983,7 +18983,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 		
 		ViewManager.getView("#rollupRuleSearchResults").populate(results);
 		
-		if(results.length == 0 && $("#rollupRuleResults-data").first().children().size() == 0)
+		if(results.length == 0 && $("#rollupRuleResults-data").first().children().length == 0)
 		{
 			ViewManager.getView("#rollupRuleSearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
@@ -18993,7 +18993,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runRelationshipSearch($("#rollupRuleResults-data .row[data-id]").size());
+				runRelationshipSearch($("#rollupRuleResults-data .row[data-id]").length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -19009,14 +19009,14 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#rollupRuleResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runRelationshipSearch(resultDiv.children().size());
+//			runRelationshipSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -19093,14 +19093,14 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 				var aggregatedRows = row.siblings("[data-aggregateId='"+aggId+"']");
 				
 				if($(ev.target).is(":checked")){
-					if(aggregatedRows.find(".datum-select:checked").size() == aggregatedRows.size()){
+					if(aggregatedRows.find(".datum-select:checked").length == aggregatedRows.length){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("checked", "checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", true);
 					}
 				}else{
-					if(aggregatedRows.find(".datum-select:checked").size() == 0){
+					if(aggregatedRows.find(".datum-select:checked").length == 0){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").removeAttr("checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
@@ -19152,7 +19152,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 					
 					var competencyRow;
 					
-					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").size() == 0){
+					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").length == 0){
 						$("#rollupRuleSearchResults #"+dataViewPrefix+"-data").append("<div class='row column competencyAggregateRow' data-competencyId='"+shortCompId+"'></div>");
 						
 						competencyRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']")
@@ -19160,7 +19160,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						competencyRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						competencyRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -19217,7 +19217,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -19281,9 +19281,9 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						competencyRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']");
 					}
 					
-					if(competencyRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(competencyRow.nextAll(".competencyAggregateRow").length > 0){
 						competencyRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(competencyRow.nextAll(".row").size() > 0){
+					}else if(competencyRow.nextAll(".row").length > 0){
 						competencyRow.nextAll(".row").last().after(row);
 					}else{
 						competencyRow.after(row);
@@ -19295,7 +19295,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 					
 					var unknownAggregateRow;
 					
-					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId=unknown]").size() == 0){
+					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId=unknown]").length == 0){
 						$("#rollupRuleSearchResults #"+dataViewPrefix+"-data").prepend("<div class='row column competencyAggregateRow' data-competencyId='unknown'></div>");
 						
 						unknownAggregateRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='unknown']")
@@ -19303,7 +19303,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						unknownAggregateRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						unknownAggregateRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -19360,7 +19360,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -19378,9 +19378,9 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						unknownAggregateRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='unknown']");
 					}
 					
-					if(unknownAggregateRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(unknownAggregateRow.nextAll(".competencyAggregateRow").length > 0){
 						unknownAggregateRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(unknownAggregateRow.nextAll(".row").size() > 0){
+					}else if(unknownAggregateRow.nextAll(".row").length > 0){
 						unknownAggregateRow.nextAll(".row").last().after(row);
 					}else{
 						unknownAggregateRow.after(row);
@@ -19418,7 +19418,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						row.find(".datum-owner").append(ownerEl);
 						
 						var timeoutFunc = function(){
-							if($("#"+elId).size() > 0){
+							if($("#"+elId).length > 0){
 								ViewManager.showView(new IdentityDisplay(datum["owner"][i]), "#"+elId)
 							}else{
 								setTimeout(timeoutFunc, 500);
@@ -19429,7 +19429,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						
 					}
 				}
-				if(row.find(".datum-competency").size() > 0){
+				if(row.find(".datum-competency").length > 0){
 					EcCompetency.get(datum.competency, function(competency){
 						row.find(".datum-competency").html("for <span style='font-style:italic;'></span>");
 						row.find(".datum-competency span").text(competency.getName());

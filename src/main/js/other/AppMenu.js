@@ -131,7 +131,7 @@ var AppMenu = (function (AppMenu) {
 	 */
 	function buildCompetencyItem(compId){
 		compId = EcRemoteLinkedData.trimVersionFromUrl(compId);
-		if($("#appMenuRecentList li[data-id='"+compId+"']").size() == 0){
+		if($("#appMenuRecentList li[data-id='"+compId+"']").length == 0){
 			EcCompetency.get(compId, function(comp){
 				var recentListItem = $("<li data-recent='competency'><a></a></li>")
 				recentListItem.attr("data-id", compId);
@@ -184,7 +184,7 @@ var AppMenu = (function (AppMenu) {
 	 */
 	function buildFrameworkItem(frameworkId){
 		frameworkId = EcRemoteLinkedData.trimVersionFromUrl(frameworkId);
-		if($("#appMenuRecentList li[data-id='"+frameworkId+"']").size() == 0){
+		if($("#appMenuRecentList li[data-id='"+frameworkId+"']").length == 0){
 			EcFramework.get(frameworkId, function(framework){
 				var recentListItem = $("<li data-recent='framework'><a></a></li>")
 				recentListItem.attr("data-id", frameworkId);

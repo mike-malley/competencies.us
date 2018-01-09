@@ -26,7 +26,7 @@ function timeoutLoop() {
         $(".status").text(timeouts.length + " tasks remaining...").show();
     } else {
         $(".status").text(timeouts.length + " tasks remaining...").hide();
-        if($("#blocking").size() > 0)
+        if($("#blocking").length > 0)
         	$("#blocking").foundation('close');
     }
 }

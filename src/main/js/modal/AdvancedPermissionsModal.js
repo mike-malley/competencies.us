@@ -27,7 +27,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 		else
 			pk = contact.ppk.toPk();
 
-		if($("#advancedPermissionsOwners option").size() == 1){
+		if($("#advancedPermissionsOwners option").length == 1){
 			$("#noOwners").addClass("hide");
 			$("#advancedPermissionsOwners").removeClass("empty");
 			$("#advancedPermissionsOwners").removeAttr("disabled");
@@ -57,7 +57,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 		else
 			pk = contact.ppk.toPk();
 
-		if($("#advancedPermissionsReaders option").size() == 1){
+		if($("#advancedPermissionsReaders option").length == 1){
 			$("#noReaders").addClass("hide");
 			$("#advancedPermissionsReaders").removeClass("empty");
 			$("#advancedPermissionsReaders").removeAttr("disabled");
@@ -303,7 +303,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 			
 			if(!onlyReaders){
 				$("#privateSwitch").change(function(){
-					if($("#advancedPermissionsOwners option").size() == 1 && $("#advancedPermissionsOwners").attr("disabled") == "disabled"){
+					if($("#advancedPermissionsOwners option").length == 1 && $("#advancedPermissionsOwners").attr("disabled") == "disabled"){
 						$("#privateSwitch").prop("checked", false)
 						ViewManager.getView("#advancedPermissionsMessageContainer").displayAlert("Cannot encrypt a publicly owned object", "publicPrivate");
 						return;
@@ -388,7 +388,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 			
 			$("#advancedPermissionsDeleteOwner").click(function(){
 				$("#advancedPermissionsOwners option[value='"+$("#advancedPermissionsOwners").val()+"']").remove();
-				if($("#advancedPermissionsOwners option").size() == 1){
+				if($("#advancedPermissionsOwners option").length == 1){
 					$("#noOwners").removeClass("hide")
 					$("#advancedPermissionsOwners").attr("disabled", "disabled");
 					$("#advancedPermissionsOwners").addClass("empty");
@@ -429,7 +429,7 @@ var AdvancedPermissionsModal = (function(AdvancedPermissionsModal){
 			
 			$("#advancedPermissionsDeleteReader").click(function(){
 				$("#advancedPermissionsReaders option[value='"+$("#advancedPermissionsReaders").val()+"']").remove();
-				if($("#advancedPermissionsReaders option").size() == 1){
+				if($("#advancedPermissionsReaders option").length == 1){
 					$("#noReaders").removeClass("hide")
 					$("#advancedPermissionsReaders").attr("disabled", "disabled");
 					$("#advancedPermissionsReaders").addClass("empty");

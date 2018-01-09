@@ -81,7 +81,7 @@ AssertionSearchScreen = (function (AssertionSearchScreen) {
     	ViewManager.getView("#menuContainer").showSortBasic();
         ViewManager.getView("#assertionSearchResults").populate(results);
 
-        if (results.length == 0 && $("#assertionResults-data").first().children().size() == 0) {
+        if (results.length == 0 && $("#assertionResults-data").first().children().length == 0) {
             ViewManager.getView("#assertionSearchResults").showNoDataMessage();
         } else if (results.length < maxLength) {
             $("#moreSearchResults").addClass("hide");
@@ -90,7 +90,7 @@ AssertionSearchScreen = (function (AssertionSearchScreen) {
             $("#getMoreResults").click(function () {
                 $("#getMoreResults").addClass("hide");
                 $("#loadingMoreResults").removeClass("hide");
-                runAssertionSearch($("#assertionResults-data").first().children().size());
+                runAssertionSearch($("#assertionResults-data").first().children().length);
             })
 
             $("#getMoreResults").removeClass("hide");
@@ -109,14 +109,14 @@ AssertionSearchScreen = (function (AssertionSearchScreen) {
     function scrollSearchHandler(){
     	var resultDiv = $("#assertionResults-data").first(); 
     	
-    	if(resultDiv.size() == 0){
+    	if(resultDiv.length == 0){
     		$(window).off("scroll", scrollSearchHandler);
     	}
     	else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
     	{
     		//$("#moreSearchResults").addClass("hide");
     		//$("#loadingMoreResults").removeClass("hide");
-    		runAssertionSearch(resultDiv.children().size());
+    		runAssertionSearch(resultDiv.children().length);
     	}
     }
     */

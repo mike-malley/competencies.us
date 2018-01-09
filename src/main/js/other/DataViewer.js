@@ -262,7 +262,7 @@ var DataViewer = (function(DataViewer){
 				return;
 			}
 			
-			if($("#"+prefix+"-data .row").size() == 0){
+			if($("#"+prefix+"-data .row").length == 0){
 				for(var i in self.dataStore){
 					delete self.dataStore[i];
 				}
@@ -288,7 +288,7 @@ var DataViewer = (function(DataViewer){
 				return;
 			}
 			
-			if($("#"+prefix+"-data .row").size() == 0){
+			if($("#"+prefix+"-data .row").length == 0){
 				for(var i in self.dataStore){
 					delete self.dataStore[i];
 				}
@@ -332,7 +332,7 @@ var DataViewer = (function(DataViewer){
 	 */
 	function buildData(id, datum, prefix, callbacks, self){
 		var row;
-		if($(".row[data-id='"+id+"']").size() == 0){
+		if($(".row[data-id='"+id+"']").length == 0){
 			row = $("<div class='row column' style='padding:7px 2px;padding-left:40px;'></div>");
 		}else{
 			return;
@@ -361,7 +361,7 @@ var DataViewer = (function(DataViewer){
 				callbacks["clickDataSelect"](ev, id, datum, prefix);
 			}
 			
-			if($(".dataView").find(".datum-select:checked").size() == $("#"+prefix+"-data .row").size()){
+			if($(".dataView").find(".datum-select:checked").length == $("#"+prefix+"-data .row").length){
 				$(".toggleSelectData").text("Unselect All");
 			}else{
 				$(".toggleSelectData").text("Select All");
@@ -409,7 +409,7 @@ var DataViewer = (function(DataViewer){
 					$("#"+prefix+"-menu").slideDown();
 				}
 				
-				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 			}else{
 				$(ev.target).closest(".dataView").removeClass("selecting");
 				
@@ -488,7 +488,7 @@ var DataViewer = (function(DataViewer){
 					
 					row.remove();
 					
-					if(siblings.size() == 0){
+					if(siblings.length == 0){
 						showNoDataMessage(prefix);
 						$(".toggleSelectData").addClass("hide");
 					}
@@ -529,7 +529,7 @@ var DataViewer = (function(DataViewer){
 			
 			var moreActions = callbacks["moreRowTools"](datum);
 			
-			if(moreActions != undefined && moreActions != "" && $(moreActions).size() > 0){
+			if(moreActions != undefined && moreActions != "" && $(moreActions).length > 0){
 				element.append(more);
 				
 				element.find(".fa-ellipsis-v").click(function(ev){
@@ -746,7 +746,7 @@ var DataViewer = (function(DataViewer){
 						EcRepository._delete(datum, function(){
 							$("#"+prefix+"-data").find(".row[data-id='"+id+"']").remove();
 							
-							if($("#"+prefix+"-data").find(".row").size() == 0){
+							if($("#"+prefix+"-data").find(".row").length == 0){
 								showNoDataMessage(prefix);
 								$(".toggleSelectData").addClass("hide");
 							}
@@ -813,7 +813,7 @@ var DataViewer = (function(DataViewer){
 			
 			var moreActions = callbacks["moreMenuTools"](prefix);
 			
-			if(moreActions != undefined && moreActions != "" && $(moreActions).size() > 0){
+			if(moreActions != undefined && moreActions != "" && $(moreActions).length > 0){
 				row.find("#moreMenuBtns").removeClass("hide");
 				
 				list.append(moreActions);
@@ -936,7 +936,7 @@ var DataViewer = (function(DataViewer){
 		
 		
 		$(".toggleSelectData").click(function(){
-			if($(".dataView").find(".datum-select:checked").size() == $("#"+prefix+"-data .row").size()){
+			if($(".dataView").find(".datum-select:checked").length == $("#"+prefix+"-data .row").length){
 				deselectAll(prefix);
 				$(".toggleSelectData").text("Select All");
 			}else{
@@ -946,7 +946,7 @@ var DataViewer = (function(DataViewer){
 				
 				$(".dataView .datum-select").prop("checked", true);
 				
-				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+				$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 				
 				if(!$("#"+prefix+"-menu").is(":visible") && menu != undefined){
 					$("#"+prefix+"-menu").slideDown();
@@ -1004,7 +1004,7 @@ var DataViewer = (function(DataViewer){
 		
 		if(dataSize > 0){
 			populateData(data, this, this.prefix, this.callbacks);
-		}else if($("#"+this.prefix+"-data").find(".row").size() == 0){
+		}else if($("#"+this.prefix+"-data").find(".row").length == 0){
 			showNoDataMessage(this.prefix);
 		}
 	}

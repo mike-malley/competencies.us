@@ -136,7 +136,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
 
 
         var competencyGroup = $("#frameworkEditRelations optgroup#" + sourceId);
-        if (competencyGroup.size() == 0) {
+        if (competencyGroup.length == 0) {
             competencyGroup = $("<optgroup></optgroup>");
             competencyGroup.attr("id", sourceId);
             competencyGroup.attr("label", EcCompetency.getBlocking(relation.source).getName())
@@ -180,7 +180,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
 
         var competencyGroup = $("#frameworkEditLevels optgroup#" + competencyId);
 
-        if (competencyGroup.size() == 0) {
+        if (competencyGroup.length == 0) {
             competencyGroup = $("<optgroup></optgroup>");
             competencyGroup.attr("id", competencyId);
             competencyGroup.attr("label", competency.getName());
@@ -226,7 +226,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
 
         var competencyGroup = $("#frameworkEditRollupRules optgroup#" + competencyId);
 
-        if (competencyGroup.size() == 0) {
+        if (competencyGroup.length == 0) {
             competencyGroup = $("<optgroup></optgroup>");
             competencyGroup.attr("id", competencyId);
             competencyGroup.attr("label", competency.getName());
@@ -903,7 +903,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
             }
 
             $("#frameworkEditRelations optgroup").each(function (idx, el) {
-                if ($(el).children().size() == 0)
+                if ($(el).children().length == 0)
                     $(el).remove();
             });
 
@@ -938,7 +938,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
             }
 
             $("#frameworkEditLevels optgroup").each(function (idx, el) {
-                if ($(el).children().size() == 0)
+                if ($(el).children().length == 0)
                     $(el).remove();
             })
 
@@ -973,7 +973,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
             }
 
             $("#frameworkEditRollupRules optgroup").each(function (idx, el) {
-                if ($(el).children().size() == 0)
+                if ($(el).children().length == 0)
                     $(el).remove();
             });
         });

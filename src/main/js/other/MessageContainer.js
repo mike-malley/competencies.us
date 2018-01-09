@@ -54,7 +54,7 @@ var MessageContainer = (function(MessageContainer){
 	function clearMessage(containerId, msgId){
 		var messages = $(containerId+"Messages");
 		
-		if(msgId == undefined || (messages.find("[data-msg]").size() == 1 && messages.find("[data-msg='"+msgId+"']").size() == 1)){
+		if(msgId == undefined || (messages.find("[data-msg]").length == 1 && messages.find("[data-msg='"+msgId+"']").length == 1)){
 			hideMessageBox(containerId, function(){
 				messages.html("");
 			});

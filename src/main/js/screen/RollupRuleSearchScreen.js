@@ -112,7 +112,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 		
 		ViewManager.getView("#rollupRuleSearchResults").populate(results);
 		
-		if(results.length == 0 && $("#rollupRuleResults-data").first().children().size() == 0)
+		if(results.length == 0 && $("#rollupRuleResults-data").first().children().length == 0)
 		{
 			ViewManager.getView("#rollupRuleSearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
@@ -122,7 +122,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runRelationshipSearch($("#rollupRuleResults-data .row[data-id]").size());
+				runRelationshipSearch($("#rollupRuleResults-data .row[data-id]").length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -138,14 +138,14 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#rollupRuleResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runRelationshipSearch(resultDiv.children().size());
+//			runRelationshipSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -222,14 +222,14 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 				var aggregatedRows = row.siblings("[data-aggregateId='"+aggId+"']");
 				
 				if($(ev.target).is(":checked")){
-					if(aggregatedRows.find(".datum-select:checked").size() == aggregatedRows.size()){
+					if(aggregatedRows.find(".datum-select:checked").length == aggregatedRows.length){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("checked", "checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", true);
 					}
 				}else{
-					if(aggregatedRows.find(".datum-select:checked").size() == 0){
+					if(aggregatedRows.find(".datum-select:checked").length == 0){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").removeAttr("checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
@@ -281,7 +281,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 					
 					var competencyRow;
 					
-					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").size() == 0){
+					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").length == 0){
 						$("#rollupRuleSearchResults #"+dataViewPrefix+"-data").append("<div class='row column competencyAggregateRow' data-competencyId='"+shortCompId+"'></div>");
 						
 						competencyRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']")
@@ -289,7 +289,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						competencyRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						competencyRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -346,7 +346,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -410,9 +410,9 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						competencyRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']");
 					}
 					
-					if(competencyRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(competencyRow.nextAll(".competencyAggregateRow").length > 0){
 						competencyRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(competencyRow.nextAll(".row").size() > 0){
+					}else if(competencyRow.nextAll(".row").length > 0){
 						competencyRow.nextAll(".row").last().after(row);
 					}else{
 						competencyRow.after(row);
@@ -424,7 +424,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 					
 					var unknownAggregateRow;
 					
-					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId=unknown]").size() == 0){
+					if($("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId=unknown]").length == 0){
 						$("#rollupRuleSearchResults #"+dataViewPrefix+"-data").prepend("<div class='row column competencyAggregateRow' data-competencyId='unknown'></div>");
 						
 						unknownAggregateRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='unknown']")
@@ -432,7 +432,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						unknownAggregateRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						unknownAggregateRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -489,7 +489,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -507,9 +507,9 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						unknownAggregateRow = $("#rollupRuleSearchResults .competencyAggregateRow[data-competencyId='unknown']");
 					}
 					
-					if(unknownAggregateRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(unknownAggregateRow.nextAll(".competencyAggregateRow").length > 0){
 						unknownAggregateRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(unknownAggregateRow.nextAll(".row").size() > 0){
+					}else if(unknownAggregateRow.nextAll(".row").length > 0){
 						unknownAggregateRow.nextAll(".row").last().after(row);
 					}else{
 						unknownAggregateRow.after(row);
@@ -547,7 +547,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						row.find(".datum-owner").append(ownerEl);
 						
 						var timeoutFunc = function(){
-							if($("#"+elId).size() > 0){
+							if($("#"+elId).length > 0){
 								ViewManager.showView(new IdentityDisplay(datum["owner"][i]), "#"+elId)
 							}else{
 								setTimeout(timeoutFunc, 500);
@@ -558,7 +558,7 @@ RollupRuleSearchScreen = (function(RollupRuleSearchScreen){
 						
 					}
 				}
-				if(row.find(".datum-competency").size() > 0){
+				if(row.find(".datum-competency").length > 0){
 					EcCompetency.get(datum.competency, function(competency){
 						row.find(".datum-competency").html("for <span style='font-style:italic;'></span>");
 						row.find(".datum-competency span").text(competency.getName());

@@ -61,7 +61,7 @@ RelationshipEditScreen = (function(RelationshipEditScreen){
 		
 		if(relation != null && relation.relationType != null && relation.relationType != ""){
 			var currentOption = $("#relationEditType option[value='"+relation.relationType+"']");
-			if(currentOption.size() > 0){
+			if(currentOption.length > 0){
 				currentOption.attr("selected", "selected");
 			}else{
 				var typeDisplay = relation.relationType.split(/(?=[A-Z])/).join(" ");

@@ -28,7 +28,7 @@ var LoginModal = (function (LoginModal) {
                 ViewManager.getView("#loginMessageContainer").displayWarning(warning);
         });
 
-        if ($(AppController.serverController.serverList).size() > 0) {
+        if ($(AppController.serverController.serverList).length > 0) {
             $("#loginServer").html("");
         }
         for (var serverName in AppController.serverController.serverList) {

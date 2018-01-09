@@ -117,7 +117,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
         tip += level.id;
 
-        if ($("#competencyLevelContainer").children("span").size() > 0)
+        if ($("#competencyLevelContainer").children("span").length > 0)
             $("#competencyLevelContainer").append(", ");
 
         $("#competencyLevelContainer").append(container);
@@ -135,7 +135,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
                 if (level != null)
                     addLevel(level)
-                else if ($("#competencyLevelContainer").find(".level").size() == 0)
+                else if ($("#competencyLevelContainer").find(".level").length == 0)
                     $("#competencyNoLevels").removeClass("hide");
             }));
         });
@@ -181,7 +181,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
         tip += rollupRule.id;
 
-        if ($("#competencyRollupRuleContainer").children("span").size() > 0)
+        if ($("#competencyRollupRuleContainer").children("span").length > 0)
             $("#competencyRollupRuleContainer").append(", ");
 
         $("#competencyRollupRuleContainer").append(container);
@@ -198,7 +198,7 @@ CompetencyEditScreen = (function (CompetencyEditScreen) {
 
                 if (rollupRule != null)
                     addRollupRule(rollupRule)
-                else if ($("#competencyRollupRuleContainer").find("span").size() == 0)
+                else if ($("#competencyRollupRuleContainer").find("span").length == 0)
                     $("#competencyNoRollupRules").removeClass("hide");
             }));
         });

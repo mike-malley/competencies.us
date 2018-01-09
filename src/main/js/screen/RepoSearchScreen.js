@@ -46,12 +46,12 @@ RepoSearchScreen = (function(RepoSearchScreen){
 			ownership = "all";
 		
 		var types = undefined;
-		if($("#repoSearchTypes input:checkbox:checked").size() != $("#repoSearchTypes input:checkbox").size())
+		if($("#repoSearchTypes input:checkbox:checked").length != $("#repoSearchTypes input:checkbox").length)
 		{
 			 types = $("#repoSearchTypes input:checkbox:checked").map(function(){
 			      return $(this).parent().attr('title');
 		    }).get();
-		}else if($("#repoSearchTypes input:checkbox:checked").size() == 0 && urlTypes != undefined){
+		}else if($("#repoSearchTypes input:checkbox:checked").length == 0 && urlTypes != undefined){
 			types = urlTypes;
 		}else{
 			types = undefined;
@@ -111,7 +111,7 @@ RepoSearchScreen = (function(RepoSearchScreen){
 				//ViewManager.getView("#repoSearchResults").showProgressMessage();
 				ViewManager.getView("#repoSearchResults").deselectAll();
 				
-				if($("#repoResults-data").first().children().size() == 0)
+				if($("#repoResults-data").first().children().length == 0)
 					ViewManager.getView("#repoSearchResults").showProgressMessage();
 				
 				var params = {};
@@ -166,7 +166,7 @@ RepoSearchScreen = (function(RepoSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runRepoSearch($("#repoResults-data").first().children().size());
+				runRepoSearch($("#repoResults-data").first().children().length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -182,14 +182,14 @@ RepoSearchScreen = (function(RepoSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#repoResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runRepoSearch(resultDiv.children().size());
+//			runRepoSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -256,7 +256,7 @@ RepoSearchScreen = (function(RepoSearchScreen){
 	 */
 	function displayTypes(typeObjects)
 	{
-		if($(typeObjects).size() == 0)
+		if($(typeObjects).length == 0)
 			errorDisplayingTypes("No Types Returned");
 		
 		$("#repoSearchTypes li.type").remove();
@@ -322,16 +322,16 @@ RepoSearchScreen = (function(RepoSearchScreen){
 			var checked = $("#repoSearchTypes input:checked");
 			
 			var typeText;
-			if(checked.size() == 0 || checked.size() == $("#repoSearchTypes input").size()){
+			if(checked.length == 0 || checked.length == $("#repoSearchTypes input").length){
 				typeText = "All";
 				$("#repoSearchTypes input:checkbox").prop('checked', true);
 				selectToggle.text("Deselect All");
 				$("#repoSearchTypesText").css("font-size", "normal");
-			}else if(checked.size() == 1){
+			}else if(checked.length == 1){
 				typeText = checked.closest("label").text();
 				$("#repoSearchTypesText").css("font-size", "normal");
 			}else{
-				typeText = checked.size() + " Types Selected";
+				typeText = checked.length + " Types Selected";
 				$("#repoSearchTypesText").css("font-size", "small");
 			}
 			

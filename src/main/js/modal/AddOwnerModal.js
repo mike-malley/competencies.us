@@ -29,7 +29,7 @@ var AddOwnerModal = (function(AddOwnerModal){
 		var ownerElements = addingTo.children("div").children("[field='@owner']").find("ul").find(".identityDisplay");
 		
 		var owners = [];
-		for(var i = 0; i < ownerElements.size(); i++){
+		for(var i = 0; i < ownerElements.length; i++){
 			var el = ownerElements.get(i);
 			var pk = $(el).attr("data-pk")
 			owners.push(pk)

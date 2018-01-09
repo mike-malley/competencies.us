@@ -63,7 +63,7 @@ small {
 
 /* --- MENU --- */
 
-.top-bar
+.top-bar,.top-bar ul
 {
     background-color: rgb(53,152,220);
     font-size: .75rem;
@@ -325,10 +325,6 @@ li.cass-competency-level:before {
 	   color: #1585cf;
 }
 
-#modalContainer{
-	margin:0px;
-}
-
 .twitter-typeahead{
 	width:100%;
 	top: 4px;
@@ -383,11 +379,6 @@ li.cass-competency-level:before {
 }
 .tt-suggestion p {
     margin: 0;
-}
-
-.menu>li>div{
-	padding: .7rem 1rem;
-    line-height: 1;
 }
 
 .menu-icon:after{

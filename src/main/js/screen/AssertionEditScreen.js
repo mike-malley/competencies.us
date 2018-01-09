@@ -46,7 +46,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 	    if(assertion.agent != undefined){
 	    	$("#assertionAgentInput option").removeAttr("selected");
 		    var agentOption = $("#assertionAgentInput option[value='"+assertion.getAgent().toPem()+"']");
-		    if(agentOption.size() != 1)
+		    if(agentOption.length != 1)
 		    	$("#assertionAgentInput").append($("<option selected>Unknown</option>"));
 		    else
 		    	agentOption.attr("selected","selected");
@@ -59,7 +59,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 	    	var subjectOption = $("#assertionSubjectInput option[value='"+assertion.getSubject().toPem()+"']");
 	    	
 	    	$("#assertionSubjectInput option").removeAttr("selected");
-	    	if(subjectOption.size() == 1){
+	    	if(subjectOption.length == 1){
 	    		subjectOption.attr("selected", "selected");
 	    	}else{
 	    		var option = $("<option selected='selected'>Unknown Subject</option>");
@@ -73,13 +73,13 @@ AssertionEditScreen = (function(AssertionEditScreen){
 	    	var competencyOption = $("#assertionCompetencyInput option[value='"+assertion.competency+"']");
 	    	
 	    	$("#assertionCompetencyInput option").removeAttr("selected");
-	    	if(competencyOption.size() == 1){
+	    	if(competencyOption.length == 1){
 	    		competencyOption.attr("selected", "selected");
 	    	}else{
 	    		EcCompetency.get(assertion.competency, function(competency){
 	    			var competencyOption = $("#assertionCompetencyInput option[value='"+EcRemoteLinkedData.trimVersionFromUrl(competency.id)+"']");
 	    			
-	    			if(competencyOption.size() > 0){
+	    			if(competencyOption.length > 0){
 	    				competencyOption.attr("selected", "selected");
 	    			}else{
 	    				var option = $("<option></option>");
@@ -106,7 +106,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 		    	var levelOption = $("#assertionLevelInput option[value='"+assertion.level+"']");
 		    	
 		    	$("#assertionLevelInput option").removeAttr("selected");
-		    	if(levelOption.size() == 1){
+		    	if(levelOption.length == 1){
 		    		levelOption.attr("selected", "selected");
 		    	}else{
 		    		var option = $("<option selected='selected'>Unknown Level</option>");
@@ -276,7 +276,7 @@ AssertionEditScreen = (function(AssertionEditScreen){
 				
 				var competencyOption = $("#assertionCompetencyInput option[value='"+EcRemoteLinkedData.trimVersionFromUrl(competencies[i].id)+"']")
 				
-				if(competencyOption.size() > 0){
+				if(competencyOption.length > 0){
 					competencyOption.attr("selected", "selected");
 				}else{
 					var option = $("<option></option>");

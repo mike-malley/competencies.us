@@ -57,7 +57,7 @@ var CreateUserModal = (function(CreateUserModal){
 	{
 		ViewManager.showView(new MessageContainer("createUser"), "#createMessageContainer");
 
-		if($(AppController.serverController.serverList).size() > 0 ){
+		if($(AppController.serverController.serverList).length > 0 ){
 			$("#createServer").html("");
 		}
 		for(var serverName in AppController.serverController.serverList){

@@ -85,7 +85,7 @@ var ChangeServerModal = (function (ChangeServerModal) {
         $("#changeServerCurrentServer").text(AppController.serverController.selectedServerName);
         $("#changeServerCurrentServer").attr('title', AppController.serverController.selectedServerUrl);
 
-        if ($(AppController.serverController.serverList).size() > 0) {
+        if ($(AppController.serverController.serverList).length > 0) {
             $("#newServer").html("");
             for (var serverName in AppController.serverController.serverList) {
                 var serverUrl = AppController.serverController.serverList[serverName];

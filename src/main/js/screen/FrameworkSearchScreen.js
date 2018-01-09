@@ -109,7 +109,7 @@ FrameworkSearchScreen = (function(FrameworkSearchScreen){
 		ViewManager.getView("#menuContainer").showSortBasic();
 		ViewManager.getView("#frameworkSearchResults").populate(results);
 		
-		if(results.length == 0 && $("#frameworkResults-data").first().children().size() == 0){
+		if(results.length == 0 && $("#frameworkResults-data").first().children().length == 0){
 			ViewManager.getView("#frameworkSearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
 			$("#moreSearchResults").addClass("hide");
@@ -118,7 +118,7 @@ FrameworkSearchScreen = (function(FrameworkSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runFrameworkSearch($("#frameworkResults-data").first().children().size());
+				runFrameworkSearch($("#frameworkResults-data").first().children().length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -134,14 +134,14 @@ FrameworkSearchScreen = (function(FrameworkSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#frameworkResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runFrameworkSearch(resultDiv.children().size());
+//			runFrameworkSearch(resultDiv.children().length);
 //		}
 //	}
 	

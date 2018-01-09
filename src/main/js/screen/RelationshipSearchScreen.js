@@ -121,7 +121,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 		
 		ViewManager.getView("#relationshipSearchResults").populate(results);
 		
-		if(results.length == 0 && $("#relationshipResults-data").first().children().size() == 0)
+		if(results.length == 0 && $("#relationshipResults-data").first().children().length == 0)
 		{
 			ViewManager.getView("#relationshipSearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
@@ -131,7 +131,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runRelationshipSearch($("#relationshipResults-data .row[data-id]").size());
+				runRelationshipSearch($("#relationshipResults-data .row[data-id]").length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -147,14 +147,14 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 //	function scrollSearchHandler(){
 //		var resultDiv = $("#relationshipResults-data").first(); 
 //		
-//		if(resultDiv.size() == 0){
+//		if(resultDiv.length == 0){
 //			$(window).off("scroll", scrollSearchHandler);
 //		}
 //		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 //		{
 //			//$("#moreSearchResults").addClass("hide");
 //			//$("#loadingMoreResults").removeClass("hide");
-//			runRelationshipSearch(resultDiv.children().size());
+//			runRelationshipSearch(resultDiv.children().length);
 //		}
 //	}
 	
@@ -267,14 +267,14 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 				var aggregatedRows = row.siblings("[data-aggregateId='"+aggId+"']");
 				
 				if($(ev.target).is(":checked")){
-					if(aggregatedRows.find(".datum-select:checked").size() == aggregatedRows.size()){
+					if(aggregatedRows.find(".datum-select:checked").length == aggregatedRows.length){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("checked", "checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", true);
 					}
 				}else{
-					if(aggregatedRows.find(".datum-select:checked").size() == 0){
+					if(aggregatedRows.find(".datum-select:checked").length == 0){
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").removeAttr("checked");
 						row.siblings("[data-competencyId='"+aggId+"']").find(".datum-select").prop("indeterminate", false);
 					}else{
@@ -313,7 +313,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					
 					var competencyRow;
 					
-					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").size() == 0){
+					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId="+shortCompId+"]").length == 0){
 						$("#relationshipSearchResults #"+dataViewPrefix+"-data").append("<div class='row column competencyAggregateRow' data-competencyId='"+shortCompId+"'></div>");
 						
 						competencyRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']")
@@ -321,7 +321,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						competencyRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						competencyRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -378,7 +378,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -442,9 +442,9 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						competencyRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='"+shortCompId+"']");
 					}
 					
-					if(competencyRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(competencyRow.nextAll(".competencyAggregateRow").length > 0){
 						competencyRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(competencyRow.nextAll(".row").size() > 0){
+					}else if(competencyRow.nextAll(".row").length > 0){
 						competencyRow.nextAll(".row").last().after(row);
 					}else{
 						competencyRow.after(row);
@@ -456,7 +456,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					
 					var unknownAggregateRow;
 					
-					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId=unknown]").size() == 0){
+					if($("#relationshipSearchResults .competencyAggregateRow[data-competencyId=unknown]").length == 0){
 						$("#relationshipSearchResults #"+dataViewPrefix+"-data").prepend("<div class='row column competencyAggregateRow' data-competencyId='unknown'></div>");
 						
 						unknownAggregateRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='unknown']")
@@ -464,7 +464,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						unknownAggregateRow.append($("<input type='checkbox' class='datum-select'></input>)"));
 						
 						unknownAggregateRow.on("click", ".datum-select", function(ev){					
-							if($(".dataView").find(".datum-select:checked").size() == $("#"+dataViewPrefix+"-data .row").size()){
+							if($(".dataView").find(".datum-select:checked").length == $("#"+dataViewPrefix+"-data .row").length){
 								$(".toggleSelectData").text("Unselect All");
 							}else{
 								$(".toggleSelectData").text("Select All");
@@ -521,7 +521,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 									$("#"+dataViewPrefix+"-menu").slideDown();
 								}
 								
-								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").size());
+								$(".dataViewMenu .dataViewSelected").text($(".dataView").find("[data-id] .datum-select:checked").length);
 							}else{
 								$(ev.target).closest(".dataView").removeClass("selecting");
 								
@@ -539,9 +539,9 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						unknownAggregateRow = $("#relationshipSearchResults .competencyAggregateRow[data-competencyId='unknown']");
 					}
 					
-					if(unknownAggregateRow.nextAll(".competencyAggregateRow").size() > 0){
+					if(unknownAggregateRow.nextAll(".competencyAggregateRow").length > 0){
 						unknownAggregateRow.nextAll(".competencyAggregateRow").first().before(row);
-					}else if(unknownAggregateRow.nextAll(".row").size() > 0){
+					}else if(unknownAggregateRow.nextAll(".row").length > 0){
 						unknownAggregateRow.nextAll(".row").last().after(row);
 					}else{
 						unknownAggregateRow.after(row);
@@ -585,7 +585,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 						row.find(".datum-owner").append(ownerEl);
 						
 						var timeoutFunc = function(){
-							if($("#"+elId).size() > 0){
+							if($("#"+elId).length > 0){
 								ViewManager.showView(new IdentityDisplay(datum["owner"][i]), "#"+elId)
 							}else{
 								setTimeout(timeoutFunc, 500);
@@ -597,7 +597,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					}
 				}
 				
-				if(row.find(".datum-source").size() > 0){
+				if(row.find(".datum-source").length > 0){
 					EcCompetency.get(datum.source, function(competency){
 						row.find(".datum-source").text(competency.getName())
 					}, function(){
@@ -606,7 +606,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 					row.find(".datum-source").text("Loading..");
 				}
 				
-				if(row.find(".datum-target").size() > 0){
+				if(row.find(".datum-target").length > 0){
 					EcCompetency.get(datum.target, function(competency){
 						row.find(".datum-target").text(competency.getName())
 					}, function(){
@@ -616,7 +616,7 @@ RelationshipSearchScreen = (function(RelationshipSearchScreen){
 				}
 				
 				var types;
-				if(row.find(".datum-target").size() == 0){
+				if(row.find(".datum-target").length == 0){
 					types = inverseTypes;
 				}else{
 					types = AppSettings.relationTypes;

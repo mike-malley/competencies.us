@@ -116,7 +116,7 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 		ViewManager.getView("#competencySearchResults").populate(results);
 		
 		
-		if(results.length == 0 && $("#competencyResults-data").first().children().size() == 0)
+		if(results.length == 0 && $("#competencyResults-data").first().children().length == 0)
 		{
 			ViewManager.getView("#competencySearchResults").showNoDataMessage();
 		}else if(results.length < maxLength){
@@ -126,7 +126,7 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 			$("#getMoreResults").click(function(){
 				$("#getMoreResults").addClass("hide");
 				$("#loadingMoreResults").removeClass("hide");
-				runCompetencySearch($("#competencyResults-data").first().children().size());
+				runCompetencySearch($("#competencyResults-data").first().children().length);
 			})
 			
 			$("#getMoreResults").removeClass("hide");
@@ -143,14 +143,14 @@ CompetencySearchScreen = (function(CompetencySearchScreen){
 	function scrollSearchHandler(){
 		var resultDiv = $("#competencyResults-data").first(); 
 		
-		if(resultDiv.children().size() == 0){
+		if(resultDiv.children().length == 0){
 			$(window).off("scroll", scrollSearchHandler);
 		}
 		else if(($(window).height() + document.body.scrollTop) > ($(document).height() - 30))
 		{
 			//$("#moreSearchResults").addClass("hide");
 			//$("#loadingMoreResults").removeClass("hide");
-			runCompetencySearch(resultDiv.children().size() );
+			runCompetencySearch(resultDiv.children().length );
 		}
 	}
 	*/

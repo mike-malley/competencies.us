@@ -76,7 +76,7 @@ var RepoEdit = (function(RepoEdit){
 	                    split[split.length-2] = guid();
 	                $(e).children("p").text(split.join("/"));
 	                
-	                if(i == $("#datum").find("[field='@id']").size() - 1)
+	                if(i == $("#datum").find("[field='@id']").length - 1)
 	                {
 	                	var obj = JSON.parse(serializeField($("#datum")));
 	                	
@@ -290,7 +290,7 @@ var RepoEdit = (function(RepoEdit){
 	    {
 	        if (field.children("label").text() == "@owner" || field.parent().parent().children("label").text() == "@owner")
 	        {
-	        	var id = "node-"+ownedNodes+"-owner-" + field.siblings("li").size();
+	        	var id = "node-"+ownedNodes+"-owner-" + field.siblings("li").length;
 	        	field.append("<span id='"+id+"' style='display:block;'></span>")
 	        	
 	        	
@@ -480,9 +480,9 @@ var RepoEdit = (function(RepoEdit){
 	 */
 	function serializeField(field,child)
 	{
-		if (field.children(".ownershipDisplay").size() == 1)
+		if (field.children(".ownershipDisplay").length == 1)
 	    	return field.children(".ownershipDisplay").attr("pk");
-		if (field.children("span").children(".identityDisplay").size() == 1)
+		if (field.children("span").children(".identityDisplay").length == 1)
 			return field.find(".identityDisplay").attr("data-pk");
 		else if(field.children("span").length == 1)
 			return field.find("input[type='checkbox']").prop("checked");

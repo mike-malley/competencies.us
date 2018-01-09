@@ -55,7 +55,7 @@ var FrameworkList = (function(FrameworkList){
 	                	
 	                    EcAlignment.get(framework.relation[i], function (rel) {
 	                    	(retry = function(){
-	                    		if($(".competency[data-id='"+rel.source+"']").size() > 0)
+	                    		if($(".competency[data-id='"+rel.source+"']").length > 0)
 		                    		addRelation(rel, framework);
 		                    	else
 		                    		setTimeout(retry, 100);
@@ -78,7 +78,7 @@ var FrameworkList = (function(FrameworkList){
 	                	
 	                    EcLevel.get(framework.level[i], function (level) {
 	                    	(retry = function(){
-	                    		if($(".competency[data-id='"+level.competency+"']").size() > 0)
+	                    		if($(".competency[data-id='"+level.competency+"']").length > 0)
 		                    		addLevel(level);
 		                    	else
 		                    		setTimeout(retry, 100);
@@ -99,7 +99,7 @@ var FrameworkList = (function(FrameworkList){
 	                	
 	                    EcRollupRule.get(framework.rollupRule[i], function (rule) {
 	                    	(retry = function(){
-	                    		if($(".competency[data-id='"+rule.competency+"']").size() > 0)
+	                    		if($(".competency[data-id='"+rule.competency+"']").length > 0)
 		                    		addRollup(rule);
 		                    	else
 		                    		setTimeout(retry, 100);
@@ -264,7 +264,7 @@ var FrameworkList = (function(FrameworkList){
 		
 		$("[data-id='"+level.competency+"'] .competencyLevels").append(element);
 		
-		var count = $("[data-id='"+level.competency+"'] .competencyLevels").find(".level").size();
+		var count = $("[data-id='"+level.competency+"'] .competencyLevels").find(".level").length;
 		$("[data-id='"+level.competency+"'] .levelCount").text("( "+count+" )");
 	}
 	
@@ -295,7 +295,7 @@ var FrameworkList = (function(FrameworkList){
 
 		$("[data-id='"+rule.competency+"'] .rollupRules").append(element);
 		
-		var count = $("[data-id='"+rule.competency+"'] .rollupRules").find(".rollupRule").size();
+		var count = $("[data-id='"+rule.competency+"'] .rollupRules").find(".rollupRule").length;
 		$("[data-id='"+rule.competency+"'] .ruleCount").text("( "+count+" )");
 	}
 	
@@ -344,7 +344,7 @@ var FrameworkList = (function(FrameworkList){
 						
 						var first = $("#frameworkList .competency").first();
 						if(first.text().toLowerCase().indexOf(text) == 0){
-							if(first.find(".competencyRelations .relation").size() >= $(el).find(".competencyRelations .relation").size()){
+							if(first.find(".competencyRelations .relation").length >= $(el).find(".competencyRelations .relation").length){
 								first.after(el);
 							}else{
 								$("#frameworkList").prepend(el);
@@ -399,7 +399,7 @@ var FrameworkList = (function(FrameworkList){
 		})
 		
 		$(".competency").not(compEl).each(function(idx, el){
-			if($(el).find("[data-id='"+competencyId+"']").size() > 0){
+			if($(el).find("[data-id='"+competencyId+"']").length > 0){
 				var parent = $(el).parent();
 				$(el).remove();
 				compEl.after(el);

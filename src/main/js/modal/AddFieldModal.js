@@ -41,7 +41,7 @@ var AddFieldModal = (function(AddFieldModal){
 				if(fieldName != "" )
 				{
 					ViewManager.getView("#addFieldMessageContainer").clearAlert("emptyText");
-					if(addingTo.find("[field="+fieldName+"]").size() > 0){
+					if(addingTo.find("[field="+fieldName+"]").length > 0){
 						ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 					}else{
 						dataEdit.addField(addingTo, fieldName, "value");
@@ -64,7 +64,7 @@ var AddFieldModal = (function(AddFieldModal){
 				if(fieldName != "")
 				{
 					ViewManager.getView("#addFieldMessageContainer").clearAlert("emptyArr");
-					if(addingTo.find("[field="+fieldName+"]").size() > 0){
+					if(addingTo.find("[field="+fieldName+"]").length > 0){
 						ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 					}else{
 						dataEdit.addField(addingTo, fieldName, new Array());
@@ -89,7 +89,7 @@ var AddFieldModal = (function(AddFieldModal){
 				if(fieldName != "" || addingTo.children("ul").length > 0)
 				{
 					ViewManager.getView("#addFieldMessageContainer").clearAlert("emptyObj");
-					if(fieldName != "" && addingTo.find("[field="+fieldName+"]").size() > 0 && addingTo.children("ul").length == 0){
+					if(fieldName != "" && addingTo.find("[field="+fieldName+"]").length > 0 && addingTo.children("ul").length == 0){
 						ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 						return;
 					}
@@ -97,7 +97,7 @@ var AddFieldModal = (function(AddFieldModal){
 					$("#typeSelectRow").removeClass("hide");
 					
 					$("#addBtn").click(function(){
-						if(fieldName != "" && addingTo.find("[field="+fieldName+"]").size() > 0){	
+						if(fieldName != "" && addingTo.find("[field="+fieldName+"]").length > 0){
 							ViewManager.getView("#addFieldMessageContainer").displayAlert("Field with that name already exists", "exists");
 						}
 						
