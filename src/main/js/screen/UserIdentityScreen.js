@@ -375,8 +375,8 @@ UserIdentityScreen = (function (UserIdentityScreen) {
 					ScreenManager.changeScreen(new UserAdminScreen());
 				});
 
-				if(!AppController.loginController.getAdmin()){
-					$("#adminButtonContainer").remove();
+				if(!AppController.serverController.getAdmin()){
+					$("#adminButtonContainer").parent().parent().remove();
 				};
 
         refreshIdentities(EcIdentityManager.ids);
