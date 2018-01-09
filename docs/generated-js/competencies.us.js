@@ -1265,7 +1265,7 @@ var ServerController = /**
  *                  Name of the Default Server (displayed to the user when selecting servers)
  *  @constructor
  */
-function(storageSystem, defaultServer, defaultServerName) {
+function(storageSystem) {
     this.onServerChange = new Array();
     this.onLoad = new Array();
     this.storageSystem = storageSystem;
@@ -1273,26 +1273,6 @@ function(storageSystem, defaultServer, defaultServerName) {
         this.storageSystem = new StorageController();
     this.serverList = {};
     this.repoInterface = new EcRepository();
-    var me = this;
-    if (window.location.protocol == "http") {
-        var r = new EcRepository();
-        r.autoDetectRepositoryAsync(function() {
-            me.addServer("This Server (" + r.selectedServer + ")", r.selectedServer, null, null);
-        }, function(o) {});
-    }
-    var cachedList = storageSystem.getStoredValue("cass.server.list");
-    if (cachedList != null) 
-        cachedList = JSON.parse(cachedList);
-    if (cachedList == null) 
-        cachedList = new Object();
-    var repos = {};
-    var finalCachedList = cachedList;
-    var eah = new EcAsyncHelper();
-    eah.each(EcObject.keys(cachedList), function(serverName, callback0) {
-        me.testAddEndpoint(serverName, (finalCachedList)[serverName], callback0);
-    }, function(strings) {
-        me.serversLoaded(defaultServer, defaultServerName);
-    });
 };
 ServerController = stjs.extend(ServerController, null, [], function(constructor, prototype) {
     prototype.serverList = null;
@@ -1302,6 +1282,30 @@ ServerController = stjs.extend(ServerController, null, [], function(constructor,
     prototype.repoInterface = null;
     prototype.onServerChange = null;
     prototype.onLoad = null;
+    prototype.init = function(defaultServer, defaultServerName) {
+        var me = this;
+        if (window.location.protocol == "http") {
+            var r = new EcRepository();
+            r.autoDetectRepositoryAsync(function() {
+                me.addServer("This Server (" + r.selectedServer + ")", r.selectedServer, null, null);
+            }, function(o) {});
+        }
+        var cachedList = this.storageSystem.getStoredValue("cass.server.list");
+        if (cachedList == undefined) 
+            cachedList = null;
+        if (cachedList != null) 
+            cachedList = JSON.parse(cachedList);
+        if (cachedList == null) 
+            cachedList = new Object();
+        var repos = {};
+        var finalCachedList = cachedList;
+        var eah = new EcAsyncHelper();
+        eah.each(EcObject.keys(cachedList), function(serverName, callback0) {
+            me.testAddEndpoint(serverName, (finalCachedList)[serverName], callback0);
+        }, function(strings) {
+            me.serversLoaded(defaultServer, defaultServerName);
+        });
+    };
     prototype.serversLoaded = function(defaultServer, defaultServerName) {
         this.addServer(defaultServerName, defaultServer, null, null);
         var cachedSelected = this.storageSystem.getStoredValue("cass.server.selected");
@@ -1683,7 +1687,7 @@ AppController = stjs.extend(AppController, null, [], function(constructor, proto
         AppController.identityController = new IdentityController();
         AppController.storageController = new StorageController();
         AppController.loginController = new LoginController(AppController.storageController);
-        AppController.serverController = new ServerController(AppController.storageController, AppSettings.defaultServerUrl, AppSettings.defaultServerName);
+        AppController.serverController = new ServerController(AppController.storageController);
         AppController.serverController.onLoad.push(function() {
             AppSettings.loadSettings();
             AppController.loginController.identity = AppController.identityController;
@@ -1708,6 +1712,7 @@ AppController = stjs.extend(AppController, null, [], function(constructor, proto
                 return true;
             });
         });
+        AppController.serverController.init(AppSettings.defaultServerUrl, AppSettings.defaultServerName);
     };
 }, {serverController: "ServerController", identityController: "IdentityController", loginController: "LoginController", storageController: "StorageController"}, {});
 if (!stjs.mainCallDisabled) 

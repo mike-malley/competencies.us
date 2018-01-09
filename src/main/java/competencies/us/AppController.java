@@ -86,7 +86,7 @@ public class AppController {
 		identityController = new IdentityController();
 		storageController = new StorageController();
 		loginController = new LoginController(storageController);
-		serverController = new ServerController(storageController, AppSettings.defaultServerUrl, AppSettings.defaultServerName);
+		serverController = new ServerController(storageController);
 		serverController.onLoad.push(new Callback0() {
 			@Override
 			public void $invoke() {
@@ -129,5 +129,6 @@ public class AppController {
 				});
 			}
 		});
+		serverController.init(AppSettings.defaultServerUrl, AppSettings.defaultServerName);
 	}
 }

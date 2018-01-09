@@ -50,7 +50,7 @@ public class ServerController {
 	 *                 Name of the Default Server (displayed to the user when selecting servers)
 	 * @constructor
 	 */
-	public ServerController(final StorageController storageSystem, final String defaultServer, final String defaultServerName) {
+	public ServerController(final StorageController storageSystem) {
 		this.onServerChange = new Array<>();
 		this.onLoad = new Array<>();
 		this.storageSystem = storageSystem;
@@ -60,6 +60,9 @@ public class ServerController {
 		serverList = JSCollections.$map();
 		repoInterface = new EcRepository();
 
+	}
+
+	public void init(final String defaultServer, final String defaultServerName){
 		final ServerController me = this;
 
 		if (Global.window.location.protocol == "http") {
@@ -78,6 +81,8 @@ public class ServerController {
 		}
 
 		Object cachedList = storageSystem.getStoredValue("cass.server.list");
+		if (cachedList == Global.undefined)
+			cachedList = null;
 		if (cachedList != null)
 			cachedList = Global.JSON.parse((String) cachedList);
 		if (cachedList == null)
