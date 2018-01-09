@@ -11639,6 +11639,7 @@ FrameworkEditScreen = (function (FrameworkEditScreen) {
         $("#frameworkEditBtn").click(function (event) {
             event.preventDefault();
         });
+        $("#frameworkEditBtn").remove();
 
         $("#frameworkEditCancelBtn").click(function (event) {
             event.preventDefault();
