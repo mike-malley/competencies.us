@@ -19939,13 +19939,25 @@ UserIdentityScreen = (function (UserIdentityScreen) {
         $("#identityKeys").html("");
         $("#addKeyIv").val("");
         for (var index in identities) {
-            var wrapper = $("<div class='identityKey' style='min-height:1.33rem;'></div>");
-
             var id = identities[index];
+			refreshIdentity(id);
+        }
+    }
+
+	/**
+     * Called to display an identity passed in
+     *
+     * @memberOf UserIdentityScreen
+     * @method refreshIdentity
+     * @private
+     * @param {EcIdentity} id
+     * 			identity to display
+     */
+    function refreshIdentity(id){
+            var wrapper = $("<div class='identityKey' style='min-height:1.33rem;'></div>");
 
             var ppk = id.ppk.toPem().replaceAll("\r?\n", "");
             var name = id.displayName;
-
             var element = $("<span class='has-tip'></span>");
 
             element.attr("title", ppk);
@@ -19974,17 +19986,34 @@ UserIdentityScreen = (function (UserIdentityScreen) {
                 if (window.getSelection && document.createRange) {
                     range = document.createRange();
                     range.selectNodeContents(element.get(0));
-                    range.collapse(true);
                     sel = window.getSelection();
                     sel.removeAllRanges();
                     sel.addRange(range);
                 } else if (document.body.createTextRange) {
                     range = document.body.createTextRange();
                     range.moveToElementText(element.get(0));
-                    range.collapse(true);
                     range.select();
                 }
 
+				element.keypress(function(e){
+					if(e.keyCode === 13){
+						e.preventDefault();
+
+						if (element.text() == "") {
+							element.text(text);
+						} else if (text != element.text()) {
+							id.displayName = element.text();
+							ModalManager.showModal(new SaveIdModal());
+						}
+
+						element.off("click");
+						element.on("click", clickFunction)
+						element.addClass("has-tip");
+
+						editNameBtn.removeClass("hide")
+
+					}
+				});
                 element.blur(function () {
                     if (element.text() == "") {
                         element.text(text);
@@ -20010,8 +20039,6 @@ UserIdentityScreen = (function (UserIdentityScreen) {
             invitationOption.attr("value", ppk);
             invitationOption.text(name)
             $("#shareContactIdentity").append(invitationOption);
-
-        }
     }
 
     /**
