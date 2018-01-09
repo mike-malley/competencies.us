@@ -8,8 +8,11 @@ import org.cass.competency.EcFramework;
 import org.stjs.javascript.Global;
 import org.stjs.javascript.JSObjectAdapter;
 import org.stjs.javascript.Map;
+import org.stjs.javascript.annotation.STJSBridge;
+import org.stjs.javascript.dom.Element;
 import org.stjs.javascript.functions.Callback0;
-import org.stjs.javascript.functions.Callback1;
+import org.stjs.javascript.jquery.Event;
+import org.stjs.javascript.jquery.EventHandler;
 
 import static org.stjs.javascript.jquery.GlobalJQuery.$;
 
@@ -32,33 +35,7 @@ public class CassEditorScreen extends CassManagerScreen {
 				{
 					final Map<String, Object> urlParameters = JSObjectAdapter.$properties(URLParams.getParams());
 
-					String id = (String) urlParameters.$get("id");
-					if (id != null)
-					{
-						EcFramework.get(id, new Callback1<EcFramework>()
-						{
-							@Override
-							public void $invoke(EcFramework data)
-							{
-								ScreenManager.replaceScreen(new FrameworkViewScreen(data), reloadShowLoginCallback, urlParameters);
-
-								showLoginModalIfReload();
-							}
-						}, new Callback1<String>()
-						{
-							@Override
-							public void $invoke(String p1)
-							{
-								ScreenManager.replaceScreen(new FrameworkSearchScreen(null, null, null), reloadShowLoginCallback, urlParameters);
-
-								showLoginModalIfReload();
-							}
-						});
-
-						ScreenManager.startupScreen = ScreenManager.LOADING_STARTUP_PAGE;
-						return;
-					}
-					ScreenManager.startupScreen = new FrameworkSearchScreen(null, null, null);
+					ScreenManager.startupScreen = new CassEditorScreen(null);
 
 					showLoginModalIfReload();
 				}
@@ -85,17 +62,41 @@ public class CassEditorScreen extends CassManagerScreen {
 	@Override
 	public String getHtmlLocation()
 	{
-		return "partial/screen/frameworkView.html";
+		return "partial/screen/cassEditorScreen.html";
 	}
 
 	@Override
-	public void display(String containerId)
+	public void display(final String containerId)
 	{
-		String server = "?server=AppController.serverController.selectedServerUrl";
-		String origin = "&origin=https://competencies.us";
-		String viewer = AppController.loginController.getLoggedIn() ? "" : "&view=true";
-		$("cassEditor").attr("src","https://cassproject.github.us/cass-editor/index.html"+server+origin+viewer);
+		String server = "?server="+AppController.serverController.selectedServerUrl;
+		String origin = "&origin="+Global.window.location.origin;
+		String viewer = AppController.loginController.getLoggedIn() ? "&user=wait" : "&view=true";
+		$(containerId).find("#cassEditor").attr("src","https://cassproject.github.io/cass-editor/index.html"+server+origin+viewer);
+		if (AppController.loginController.getLoggedIn())
+		{
+			$(containerId).find("#cassEditor").ready(new EventHandler() {
+				@Override
+				public boolean onEvent(Event ev, Element THIS) {
+					Global.setTimeout(new Callback0() {
+						@Override
+						public void $invoke() {
+
+							Object ident = new Object();
+							JSObjectAdapter.$put(ident,"action","identity");
+							JSObjectAdapter.$put(ident,"identity",AppController.identityController.selectedIdentity.ppk.toPem());
+							ident = Global.JSON.stringify(ident);
+							((messagePoster)(Object)$(containerId).find("#cassEditor").$get(0).contentWindow).postMessage(ident, "https://cassproject.github.io");
+						}
+					},1000);
+					return false;
+				}
+			});
+		}
 	}
 
+	@STJSBridge()
+	public class messagePoster {
+		public void postMessage(Object o, String s){};
+	}
 
 }

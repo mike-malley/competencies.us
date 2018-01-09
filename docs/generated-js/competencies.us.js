@@ -634,44 +634,54 @@ WelcomeScreen = stjs.extend(WelcomeScreen, EcScreen, [], function(constructor, p
  *  Handles loading the CASS Manager settings from the settings.js file,
  *  this includes the default server to show and the message to show when the user
  *  refreshes the page and is logged out
- *  
+ * 
  *  @module cass.manager
  *  @class AppSettings
  *  @static
- *  
+ * 
  *  @author devlin.junker@eduworks.com
  */
 var AppSettings = function() {};
 AppSettings = stjs.extend(AppSettings, null, [], function(constructor, prototype) {
-    constructor.FIELD_MSG_RETURN = "returnLoginMessage";
+    constructor.FIELD_APP_NAME = "appName";
+    constructor.FIELD_APP_DESCRIPTION = "appDescription";
     constructor.FIELD_SERVER_URL = "defaultServerUrl";
     constructor.FIELD_SERVER_NAME = "defaultServerName";
+    constructor.FIELD_MSG_RETURN = "returnLoginMessage";
     constructor.FIELD_SHOW_REPO_MENU = "showRepoMenu";
     constructor.FIELD_SHOW_EXAMPLES_MENU = "showExamplesMenu";
-    constructor.returnLoginMessage = "For Your Security, You are Logged Out on Page Reload. Please Enter Your Credentials to Continue Logged In.";
-    constructor.defaultServerUrl = "https://sandbox.cassproject.org/api/";
+    constructor.applicationName = "CASS Manager";
+    constructor.applicationDescription = "Welcome to the CASS Manager. This application can connect to any instance of CASS. What would you like to do?";
+    constructor.defaultServerUrl = "https://sandbox.cassproject.org/api/custom/";
     constructor.defaultServerName = "CASS Sandbox";
+    constructor.returnLoginMessage = "You were Signed Out on Page Reload. Please Sign in to Continue";
     constructor.showRepoMenu = false;
     constructor.showExamplesMenu = false;
     constructor.relationTypes = null;
     /**
      *  Loads the settings from the settings file at settings/settings.js
-     *  
+     * 
      *  @static
      *  @method loadSettings
      */
     constructor.loadSettings = function() {
         var urlBase = "http://" + window.location.host + window.location.pathname;
         EcRemote.getExpectingObject(urlBase, "settings/settings.js", function(settingsObj) {
-            var msg = (settingsObj)[AppSettings.FIELD_MSG_RETURN];
-            if (msg != null) 
-                AppSettings.returnLoginMessage = msg;
+            var appName = (settingsObj)[AppSettings.FIELD_APP_NAME];
+            if (appName != null && appName != "") 
+                AppSettings.applicationName = appName;
+            var appDesc = (settingsObj)[AppSettings.FIELD_APP_DESCRIPTION];
+            if (appDesc != null && appDesc != "") 
+                AppSettings.applicationDescription = appDesc;
             var serverUrl = (settingsObj)[AppSettings.FIELD_SERVER_URL];
             if (serverUrl != null) 
                 AppSettings.defaultServerUrl = serverUrl;
             var serverName = (settingsObj)[AppSettings.FIELD_SERVER_NAME];
             if (serverName != null) 
                 AppSettings.defaultServerUrl = serverName;
+            var msg = (settingsObj)[AppSettings.FIELD_MSG_RETURN];
+            if (msg != null) 
+                AppSettings.returnLoginMessage = msg;
             if ((settingsObj)[AppSettings.FIELD_SHOW_REPO_MENU] == "true") 
                 AppSettings.showRepoMenu = true;
             if ((settingsObj)[AppSettings.FIELD_SHOW_EXAMPLES_MENU] == "true") 
@@ -1924,6 +1934,53 @@ RollupRuleSearchScreen = stjs.extend(RollupRuleSearchScreen, CassManagerScreen, 
         }
     });
 })();
+/**
+ *  Created by fray on 1/8/18.
+ */
+var CassEditorScreen = function(data) {
+    CassManagerScreen.call(this);
+    this.data = data;
+};
+CassEditorScreen = stjs.extend(CassEditorScreen, CassManagerScreen, [], function(constructor, prototype) {
+    constructor.displayName = "cassEditor";
+    prototype.mc = null;
+    prototype.getData = function() {
+        return this.data;
+    };
+    prototype.getDisplayName = function() {
+        return CassEditorScreen.displayName;
+    };
+    prototype.getHtmlLocation = function() {
+        return "partial/screen/cassEditorScreen.html";
+    };
+    prototype.display = function(containerId) {
+        var server = "?server=" + AppController.serverController.selectedServerUrl;
+        var origin = "&origin=" + window.location.origin;
+        var viewer = AppController.loginController.getLoggedIn() ? "&user=wait" : "&view=true";
+        $(containerId).find("#cassEditor").attr("src", "https://cassproject.github.io/cass-editor/index.html" + server + origin + viewer);
+        if (AppController.loginController.getLoggedIn()) {
+            $(containerId).find("#cassEditor").ready(stjs.bind(this, function(ev, THIS) {
+                setTimeout(function() {
+                    var ident = new Object();
+                    (ident)["action"] = "identity";
+                    (ident)["identity"] = AppController.identityController.selectedIdentity.ppk.toPem();
+                    ident = JSON.stringify(ident);
+                    ($(containerId).find("#cassEditor")[0].contentWindow).postMessage(ident, "https://cassproject.github.io");
+                }, 1000);
+                return false;
+            }, 1));
+        }
+    };
+}, {mc: "MessageContainer", data: "Object", reloadLoginCallback: {name: "Callback1", arguments: ["Object"]}, reloadShowLoginCallback: "Callback0", failure: {name: "Callback1", arguments: [null]}, nameToTemplate: "Object"}, {});
+(function() {
+    ScreenManager.addStartupScreenCallback(function() {
+        if (window.document.location.hash.startsWith("#" + CassEditorScreen.displayName)) {
+            var urlParameters = (URLParams.getParams());
+            ScreenManager.startupScreen = new CassEditorScreen(null);
+            CassManagerScreen.showLoginModalIfReload();
+        }
+    });
+})();
 var LevelSearchScreen = function(lastViewed, query, ownership) {
     CassManagerScreen.call(this);
     this.lastViewed = lastViewed;
@@ -2831,53 +2888,6 @@ RelationshipEditScreen = stjs.extend(RelationshipEditScreen, CassManagerScreen, 
                 return;
             }
             ScreenManager.startupScreen = new RelationshipEditScreen(null);
-            CassManagerScreen.showLoginModalIfReload();
-        }
-    });
-})();
-/**
- *  Created by fray on 1/8/18.
- */
-var CassEditorScreen = function(data) {
-    CassManagerScreen.call(this);
-    this.data = data;
-};
-CassEditorScreen = stjs.extend(CassEditorScreen, CassManagerScreen, [], function(constructor, prototype) {
-    constructor.displayName = "cassEditor";
-    prototype.mc = null;
-    prototype.getData = function() {
-        return this.data;
-    };
-    prototype.getDisplayName = function() {
-        return CassEditorScreen.displayName;
-    };
-    prototype.getHtmlLocation = function() {
-        return "partial/screen/frameworkView.html";
-    };
-    prototype.display = function(containerId) {
-        var server = "?server=AppController.serverController.selectedServerUrl";
-        var origin = "&origin=https://competencies.us";
-        var viewer = AppController.loginController.getLoggedIn() ? "" : "&view=true";
-        $("cassEditor").attr("src", "https://cassproject.github.us/cass-editor/index.html" + server + origin + viewer);
-    };
-}, {mc: "MessageContainer", data: "Object", reloadLoginCallback: {name: "Callback1", arguments: ["Object"]}, reloadShowLoginCallback: "Callback0", failure: {name: "Callback1", arguments: [null]}, nameToTemplate: "Object"}, {});
-(function() {
-    ScreenManager.addStartupScreenCallback(function() {
-        if (window.document.location.hash.startsWith("#" + CassEditorScreen.displayName)) {
-            var urlParameters = (URLParams.getParams());
-            var id = urlParameters["id"];
-            if (id != null) {
-                EcFramework.get(id, function(data) {
-                    ScreenManager.replaceScreen(new FrameworkViewScreen(data), CassManagerScreen.reloadShowLoginCallback, urlParameters);
-                    CassManagerScreen.showLoginModalIfReload();
-                }, function(p1) {
-                    ScreenManager.replaceScreen(new FrameworkSearchScreen(null, null, null), CassManagerScreen.reloadShowLoginCallback, urlParameters);
-                    CassManagerScreen.showLoginModalIfReload();
-                });
-                ScreenManager.startupScreen = ScreenManager.LOADING_STARTUP_PAGE;
-                return;
-            }
-            ScreenManager.startupScreen = new FrameworkSearchScreen(null, null, null);
             CassManagerScreen.showLoginModalIfReload();
         }
     });
@@ -20275,8 +20285,8 @@ UserIdentityScreen = (function (UserIdentityScreen) {
 					ScreenManager.changeScreen(new UserAdminScreen());
 				});
 
-				if(!AppController.loginController.getAdmin()){
-					$("#adminButtonContainer").remove();
+				if(!AppController.serverController.getAdmin()){
+					$("#adminButtonContainer").parent().parent().remove();
 				};
 
         refreshIdentities(EcIdentityManager.ids);

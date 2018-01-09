@@ -14,7 +14,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ec-version>1.5.0</ec-version>
+		<ec-version>SNAPSHOT</ec-version>
 	</properties>
 
 	<dependencies>
@@ -79,10 +79,11 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.3.7.v20160115</version>
 				<configuration>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
 					<httpConnector>
 						<port>8080</port>
 					</httpConnector>
-					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<webAppSourceDirectory>docs</webAppSourceDirectory>
 					<webApp>
 						<webInfIncludeJarPattern>^$</webInfIncludeJarPattern>
 						<containerIncludeJarPattern>^$</containerIncludeJarPattern>
