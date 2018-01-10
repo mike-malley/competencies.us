@@ -8,6 +8,7 @@ import org.cassproject.ebac.identity.remote.RemoteIdentityManagerInterface;
 import org.cassproject.ebac.repository.EcRepository;
 import org.stjs.javascript.Array;
 import org.stjs.javascript.JSGlobal;
+import org.stjs.javascript.JSObjectAdapter;
 import org.stjs.javascript.functions.Callback0;
 import org.stjs.javascript.functions.Callback1;
 
@@ -24,6 +25,7 @@ public class LoginController {
 	public RemoteIdentityManagerInterface loginServer = null;
 	public IdentityController identity = null;
 
+	public static String OAUTHGOOGLE = "oauth-google";
 	public boolean refreshLoggedIn = false;
 	public boolean loggedIn = false;
 
@@ -100,6 +102,7 @@ public class LoginController {
 							identityManager.select(EcIdentityManager.ids.$get(0).ppk.toPem());
 						}
 						success.$invoke();
+						me.cacheLogin(network);
 
 					}
 				}, new Callback1<String>() {
@@ -127,30 +130,30 @@ public class LoginController {
 	 *                 callback on error during login
 	 * @method login
 	 */
-	public void login(final String username, final String password, String server, final Callback0 success, final Callback1<String> failure) {
+	public void login(final String username, final String password, final String server, final Callback0 success, final Callback1<String> failure) {
 		final IdentityController identityManager = identity;
 
-		final LoginController that = this;
+		final LoginController me = this;
 
 		loginServer = new EcRemoteIdentityManager();
 		loginServer.setDefaultIdentityManagementServer(server);
 		loginServer.configureFromServer(new Callback1<Object>() {
 			@Override
 			public void $invoke(Object o) {
-				that.loginServer.startLogin(username, password);
-				that.loginServer.fetch(new Callback1<Object>() {
+				me.loginServer.startLogin(username, password);
+				me.loginServer.fetch(new Callback1<Object>() {
 					@Override
 					public void $invoke(Object p1) {
 						EcIdentityManager.readContacts();
 
 						EcRepository.cache = new Object();
-						that.setLoggedIn(true);
+						me.setLoggedIn(true);
 
 						if (EcIdentityManager.ids.$length() > 0) {
 							identityManager.select(EcIdentityManager.ids.$get(0).ppk.toPem());
 						}
 						success.$invoke();
-
+						me.cacheLogin(server);
 					}
 				}, new Callback1<String>() {
 					@Override
@@ -160,6 +163,67 @@ public class LoginController {
 				});
 			}
 		},failure);
+	}
+
+	public void loginWithCache(final Callback0 success, final Callback1<String> failure){
+		if (!cacheReady()) return;
+		String server = (String) storageSystem.getStoredValue("cass.login.selected");
+		if (server == "google")
+		{
+			hello(server,success,failure);
+		}
+		else {final IdentityController identityManager = identity;
+
+			final LoginController me = this;
+
+			loginServer = new EcRemoteIdentityManager();
+			loginServer.setDefaultIdentityManagementServer(server);
+			loginServer.configureFromServer(new Callback1<Object>() {
+				@Override
+				public void $invoke(Object o) {
+					JSObjectAdapter.$put(me.loginServer,"usernameWithSalt",me.storageSystem.getStoredValue("cass.login.username"));
+					JSObjectAdapter.$put(me.loginServer,"passwordWithSalt",me.storageSystem.getStoredValue("cass.login.password"));
+					JSObjectAdapter.$put(me.loginServer,"secretWithSalt",me.storageSystem.getStoredValue("cass.login.secret"));
+					me.loginServer.fetch(new Callback1<Object>() {
+						@Override
+						public void $invoke(Object p1) {
+							EcIdentityManager.readContacts();
+
+							EcRepository.cache = new Object();
+							me.setLoggedIn(true);
+
+							if (EcIdentityManager.ids.$length() > 0) {
+								identityManager.select(EcIdentityManager.ids.$get(0).ppk.toPem());
+							}
+							success.$invoke();
+						}
+					}, new Callback1<String>() {
+						@Override
+						public void $invoke(String p1) {
+							failure.$invoke(p1);
+						}
+					});
+				}
+			},failure);
+		}
+	}
+
+	private void cacheLogin(String server) {
+		storageSystem.setStoredValue("cass.login.selected",server);
+		storageSystem.setStoredValue("cass.login.username", JSObjectAdapter.$get(loginServer,"usernameWithSalt"));
+		storageSystem.setStoredValue("cass.login.password",JSObjectAdapter.$get(loginServer,"passwordWithSalt"));
+		storageSystem.setStoredValue("cass.login.secret",JSObjectAdapter.$get(loginServer,"secretWithSalt"));
+	}
+
+	public void clearCachedLogin(){
+		storageSystem.setStoredValue("cass.login.selected",null);
+		storageSystem.setStoredValue("cass.login.username", null);
+		storageSystem.setStoredValue("cass.login.password",null);
+		storageSystem.setStoredValue("cass.login.secret",null);
+	}
+
+	public boolean cacheReady() {
+		return (storageSystem.getStoredValue("cass.login.selected") != null);
 	}
 
 	/**
@@ -175,6 +239,7 @@ public class LoginController {
 		setLoggedIn(false);
 		EcIdentityManager.ids = new Array<EcIdentity>();
 		EcIdentityManager.clearContacts();
+		clearCachedLogin();
 	}
 
 	/**

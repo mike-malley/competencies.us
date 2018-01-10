@@ -296,29 +296,33 @@ var AppMenu = (function (AppMenu) {
         $("#appMenuLoginSpinner").removeClass("hide");
         $("#appMenuLoginUser").prop("disabled", true);
         $("#appMenuLoginPass").prop("disabled", true);
-        AppController.loginController.login(userId, password, server, function() {
-            AppController.serverController.checkForAdmin(function() {
-                ViewManager.getView("#menuContainer").setLoggedIn();
-                $("#appMenuLoginPanel").animate({right:"-100%"}, 800);
-                $("#appMenuLoginSpinner").next().removeClass("hide");
-                $("#appMenuLoginSpinner").addClass("hide");
-                $("#appMenuLoginUser").removeAttr("disabled").val("");
-                $("#appMenuLoginPass").removeAttr("disabled").val("");
-                $("#sessionLoginSelect").find("option").not("[value]").prop("selected", "true");
+        AppController.loginController.login(userId, password, server, afterLogin, errorLogin);
 
-				ScreenManager.reloadCurrentScreen();
-            });
-        }, function(err){
-            $("#appMenuLoginUser").addClass("error");
-            $("#appMenuLoginPass").addClass("error");
-            $("#appMenuLoginSpinner").next().removeClass("hide");
-            $("#appMenuLoginSpinner").addClass("hide");
-            $("#appMenuLoginUser").removeAttr("disabled");
-            $("#appMenuLoginPass").removeAttr("disabled");
+    }
+
+    function afterLogin(){
+		AppController.serverController.checkForAdmin(function() {
+			ViewManager.getView("#menuContainer").setLoggedIn();
+			$("#appMenuLoginPanel").animate({right:"-100%"}, 800);
+			$("#appMenuLoginSpinner").next().removeClass("hide");
+			$("#appMenuLoginSpinner").addClass("hide");
+			$("#appMenuLoginUser").removeAttr("disabled").val("");
+			$("#appMenuLoginPass").removeAttr("disabled").val("");
+			$("#sessionLoginSelect").find("option").not("[value]").prop("selected", "true");
 
 			ScreenManager.reloadCurrentScreen();
-        });
+			});
+    }
 
+    function errorLogin(err){
+		$("#appMenuLoginUser").addClass("error");
+		$("#appMenuLoginPass").addClass("error");
+		$("#appMenuLoginSpinner").next().removeClass("hide");
+		$("#appMenuLoginSpinner").addClass("hide");
+		$("#appMenuLoginUser").removeAttr("disabled");
+		$("#appMenuLoginPass").removeAttr("disabled");
+
+		ScreenManager.reloadCurrentScreen();
     }
 
     function setupMenuButtons(){
@@ -575,8 +579,7 @@ var AppMenu = (function (AppMenu) {
         AppMenu.prototype.setCurrentServer();
 
         setupMenuButtons();
-        
-     
+
         var compList = AppController.storageController.getRecent(EcCompetency.myType);
         buildCompetencyList(compList);
 
@@ -694,6 +697,8 @@ var AppMenu = (function (AppMenu) {
             }
         });
 
+		if (AppController.loginController.cacheReady())
+			AppController.loginController.loginWithCache(afterLogin,errorLogin);
     }
 
 

@@ -713,6 +713,7 @@ function(storage) {
 LoginController = stjs.extend(LoginController, null, [], function(constructor, prototype) {
     prototype.loginServer = null;
     prototype.identity = null;
+    constructor.OAUTHGOOGLE = "oauth-google";
     prototype.refreshLoggedIn = false;
     prototype.loggedIn = false;
     prototype.storageSystem = null;
@@ -767,6 +768,7 @@ LoginController = stjs.extend(LoginController, null, [], function(constructor, p
                     identityManager.select(EcIdentityManager.ids[0].ppk.toPem());
                 }
                 success();
+                me.cacheLogin(network);
             }, function(p1) {
                 failure(p1);
             });
@@ -789,23 +791,68 @@ LoginController = stjs.extend(LoginController, null, [], function(constructor, p
      */
     prototype.login = function(username, password, server, success, failure) {
         var identityManager = this.identity;
-        var that = this;
+        var me = this;
         this.loginServer = new EcRemoteIdentityManager();
         this.loginServer.setDefaultIdentityManagementServer(server);
         this.loginServer.configureFromServer(function(o) {
-            that.loginServer.startLogin(username, password);
-            that.loginServer.fetch(function(p1) {
+            me.loginServer.startLogin(username, password);
+            me.loginServer.fetch(function(p1) {
                 EcIdentityManager.readContacts();
                 EcRepository.cache = new Object();
-                that.setLoggedIn(true);
+                me.setLoggedIn(true);
                 if (EcIdentityManager.ids.length > 0) {
                     identityManager.select(EcIdentityManager.ids[0].ppk.toPem());
                 }
                 success();
+                me.cacheLogin(server);
             }, function(p1) {
                 failure(p1);
             });
         }, failure);
+    };
+    prototype.loginWithCache = function(success, failure) {
+        if (!this.cacheReady()) 
+            return;
+        var server = this.storageSystem.getStoredValue("cass.login.selected");
+        if (server == "google") {
+            this.hello(server, success, failure);
+        } else {
+            var identityManager = this.identity;
+            var me = this;
+            this.loginServer = new EcRemoteIdentityManager();
+            this.loginServer.setDefaultIdentityManagementServer(server);
+            this.loginServer.configureFromServer(function(o) {
+                (me.loginServer)["usernameWithSalt"] = me.storageSystem.getStoredValue("cass.login.username");
+                (me.loginServer)["passwordWithSalt"] = me.storageSystem.getStoredValue("cass.login.password");
+                (me.loginServer)["secretWithSalt"] = me.storageSystem.getStoredValue("cass.login.secret");
+                me.loginServer.fetch(function(p1) {
+                    EcIdentityManager.readContacts();
+                    EcRepository.cache = new Object();
+                    me.setLoggedIn(true);
+                    if (EcIdentityManager.ids.length > 0) {
+                        identityManager.select(EcIdentityManager.ids[0].ppk.toPem());
+                    }
+                    success();
+                }, function(p1) {
+                    failure(p1);
+                });
+            }, failure);
+        }
+    };
+    prototype.cacheLogin = function(server) {
+        this.storageSystem.setStoredValue("cass.login.selected", server);
+        this.storageSystem.setStoredValue("cass.login.username", (this.loginServer)["usernameWithSalt"]);
+        this.storageSystem.setStoredValue("cass.login.password", (this.loginServer)["passwordWithSalt"]);
+        this.storageSystem.setStoredValue("cass.login.secret", (this.loginServer)["secretWithSalt"]);
+    };
+    prototype.clearCachedLogin = function() {
+        this.storageSystem.setStoredValue("cass.login.selected", null);
+        this.storageSystem.setStoredValue("cass.login.username", null);
+        this.storageSystem.setStoredValue("cass.login.password", null);
+        this.storageSystem.setStoredValue("cass.login.secret", null);
+    };
+    prototype.cacheReady = function() {
+        return (this.storageSystem.getStoredValue("cass.login.selected") != null);
     };
     /**
      *  Sets the flags so the user is logged out, wipes all sign in data so the user is no longer
@@ -820,6 +867,7 @@ LoginController = stjs.extend(LoginController, null, [], function(constructor, p
         this.setLoggedIn(false);
         EcIdentityManager.ids = new Array();
         EcIdentityManager.clearContacts();
+        this.clearCachedLogin();
     };
     /**
      *  Creates a new user and saves the account details on the login server, then signs in
@@ -5076,29 +5124,33 @@ var AppMenu = (function (AppMenu) {
         $("#appMenuLoginSpinner").removeClass("hide");
         $("#appMenuLoginUser").prop("disabled", true);
         $("#appMenuLoginPass").prop("disabled", true);
-        AppController.loginController.login(userId, password, server, function() {
-            AppController.serverController.checkForAdmin(function() {
-                ViewManager.getView("#menuContainer").setLoggedIn();
-                $("#appMenuLoginPanel").animate({right:"-100%"}, 800);
-                $("#appMenuLoginSpinner").next().removeClass("hide");
-                $("#appMenuLoginSpinner").addClass("hide");
-                $("#appMenuLoginUser").removeAttr("disabled").val("");
-                $("#appMenuLoginPass").removeAttr("disabled").val("");
-                $("#sessionLoginSelect").find("option").not("[value]").prop("selected", "true");
+        AppController.loginController.login(userId, password, server, afterLogin, errorLogin);
 
-				ScreenManager.reloadCurrentScreen();
-            });
-        }, function(err){
-            $("#appMenuLoginUser").addClass("error");
-            $("#appMenuLoginPass").addClass("error");
-            $("#appMenuLoginSpinner").next().removeClass("hide");
-            $("#appMenuLoginSpinner").addClass("hide");
-            $("#appMenuLoginUser").removeAttr("disabled");
-            $("#appMenuLoginPass").removeAttr("disabled");
+    }
+
+    function afterLogin(){
+		AppController.serverController.checkForAdmin(function() {
+			ViewManager.getView("#menuContainer").setLoggedIn();
+			$("#appMenuLoginPanel").animate({right:"-100%"}, 800);
+			$("#appMenuLoginSpinner").next().removeClass("hide");
+			$("#appMenuLoginSpinner").addClass("hide");
+			$("#appMenuLoginUser").removeAttr("disabled").val("");
+			$("#appMenuLoginPass").removeAttr("disabled").val("");
+			$("#sessionLoginSelect").find("option").not("[value]").prop("selected", "true");
 
 			ScreenManager.reloadCurrentScreen();
-        });
+			});
+    }
 
+    function errorLogin(err){
+		$("#appMenuLoginUser").addClass("error");
+		$("#appMenuLoginPass").addClass("error");
+		$("#appMenuLoginSpinner").next().removeClass("hide");
+		$("#appMenuLoginSpinner").addClass("hide");
+		$("#appMenuLoginUser").removeAttr("disabled");
+		$("#appMenuLoginPass").removeAttr("disabled");
+
+		ScreenManager.reloadCurrentScreen();
     }
 
     function setupMenuButtons(){
@@ -5355,8 +5407,7 @@ var AppMenu = (function (AppMenu) {
         AppMenu.prototype.setCurrentServer();
 
         setupMenuButtons();
-        
-     
+
         var compList = AppController.storageController.getRecent(EcCompetency.myType);
         buildCompetencyList(compList);
 
@@ -5474,6 +5525,8 @@ var AppMenu = (function (AppMenu) {
             }
         });
 
+		if (AppController.loginController.cacheReady())
+			AppController.loginController.loginWithCache(afterLogin,errorLogin);
     }
 
 
