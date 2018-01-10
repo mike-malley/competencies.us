@@ -5497,11 +5497,13 @@ var AppMenu = (function (AppMenu) {
 	 */
 	AppMenu.prototype.setCurrentServer = function(){
 
-
-
 	    if(AppController.loginController.loginServer != undefined && AppController.loginController.loginServer.server != undefined &&
             AppController.loginController.loginServer.server != ""){
-            $("#appMenuSessionLogout").text("Sign out of "+AppController.loginController.loginServer.server);
+            for(var name in AppController.serverController.getServerList())
+            {
+            	if (AppController.serverController.getServerList()[name] == AppController.loginController.loginServer.server)
+            		$("#appMenuSessionLogout").text("Sign out of "+name);
+            }
         }else{
             $("#appMenuSessionLogout").text("Sign out");
         }
