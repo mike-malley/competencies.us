@@ -697,8 +697,10 @@ var AppMenu = (function (AppMenu) {
             }
         });
 
-		if (AppController.loginController.cacheReady())
-			AppController.loginController.loginWithCache(afterLogin,errorLogin);
+        if (AppController.loginController.getLoggedIn())
+        {
+        	afterLogin();
+        }
     }
 
 

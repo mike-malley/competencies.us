@@ -38,15 +38,13 @@ public class CompetencySearchScreen extends CassManagerScreen {
 						if(query != null || ownership != null){
 							
 							ScreenManager.startupScreen = new CompetencySearchScreen(null, query, ownership);
-							showLoginModalIfReload();
 							return;
 						}
 					}
 					
 					ScreenManager.startupScreen = new CompetencySearchScreen(null, null, null);
-					
-					showLoginModalIfReload();
-				}	
+
+				}
 			}
 		});
 	}

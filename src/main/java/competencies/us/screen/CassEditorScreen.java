@@ -37,7 +37,6 @@ public class CassEditorScreen extends CassManagerScreen {
 
 					ScreenManager.startupScreen = new CassEditorScreen(null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

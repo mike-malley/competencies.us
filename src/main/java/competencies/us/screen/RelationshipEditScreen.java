@@ -27,12 +27,12 @@ public class RelationshipEditScreen extends CassManagerScreen {
 								EcAlignment.get(id, new Callback1<EcAlignment>(){
 									@Override
 									public void $invoke(EcAlignment data) {
-										ScreenManager.replaceScreen(new RelationshipEditScreen(data), reloadShowLoginCallback, urlParameters);
+										ScreenManager.replaceScreen(new RelationshipEditScreen(data), afterReload, urlParameters);
 									}
 								}, new Callback1<String>(){
 									@Override
 									public void $invoke(String p1) {
-										ScreenManager.replaceScreen(new RelationshipSearchScreen(null, null, null), reloadShowLoginCallback, urlParameters);
+										ScreenManager.replaceScreen(new RelationshipSearchScreen(null, null, null), afterReload, urlParameters);
 									}
 								});
 								
@@ -45,7 +45,6 @@ public class RelationshipEditScreen extends CassManagerScreen {
 						Object data = new Object();
 						JSObjectAdapter.$put(data, "source", source);
 						ScreenManager.startupScreen = new RelationshipEditScreen(data);
-						showLoginModalIfReload();
 						return;
 					}
 					
@@ -55,15 +54,13 @@ public class RelationshipEditScreen extends CassManagerScreen {
 						Object data = new Object();
 						JSObjectAdapter.$put(data, "target", target);
 						ScreenManager.startupScreen = new RelationshipEditScreen(data);
-						showLoginModalIfReload();
 						return;
 					}
 					
 					
 					ScreenManager.startupScreen = new RelationshipEditScreen(null);
-					
-					showLoginModalIfReload();
-				}	
+
+				}
 			}
 		});
 	}

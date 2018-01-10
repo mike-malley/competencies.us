@@ -38,15 +38,13 @@ public class RollupRuleSearchScreen extends CassManagerScreen {
 						if(query != null || ownership != null){
 							
 							ScreenManager.startupScreen = new RollupRuleSearchScreen(null, query, ownership);
-							showLoginModalIfReload();
 							return;
 						}
 					}
 					
 					ScreenManager.startupScreen = new RollupRuleSearchScreen(null, null, null);
-					
-					showLoginModalIfReload();
-				}	
+
+				}
 			}
 		});
 	}

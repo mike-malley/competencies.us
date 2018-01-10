@@ -35,7 +35,7 @@ public class RepoViewScreen extends CassManagerScreen
 							@Override
 							public void $invoke(EcRemoteLinkedData data)
 							{
-								ScreenManager.replaceScreen(new RepoViewScreen(data), reloadShowLoginCallback, urlParameters);
+								ScreenManager.replaceScreen(new RepoViewScreen(data), afterReload, urlParameters);
 							}
 						}, new Callback1<String>()
 						{
@@ -43,7 +43,7 @@ public class RepoViewScreen extends CassManagerScreen
 							public void $invoke(String p1)
 							{
 								ScreenManager.replaceScreen(new RepoSearchScreen(null, null, null, null),
-										reloadShowLoginCallback, urlParameters);
+										afterReload, urlParameters);
 							}
 						});
 
@@ -52,7 +52,6 @@ public class RepoViewScreen extends CassManagerScreen
 					}
 					ScreenManager.startupScreen = new RepoSearchScreen(null, null, null, null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

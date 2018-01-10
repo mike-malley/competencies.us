@@ -34,9 +34,8 @@ public class RelationshipViewScreen extends CassManagerScreen
 							@Override
 							public void $invoke(EcAlignment data)
 							{
-								ScreenManager.replaceScreen(new RelationshipViewScreen(data), reloadShowLoginCallback, urlParameters);
+								ScreenManager.replaceScreen(new RelationshipViewScreen(data), afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 
 						}, new Callback1<String>()
@@ -45,9 +44,8 @@ public class RelationshipViewScreen extends CassManagerScreen
 							public void $invoke(String p1)
 							{
 								ScreenManager.replaceScreen(new RelationshipSearchScreen(null, null, null),
-										reloadShowLoginCallback, urlParameters);
+										afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 						});
 
@@ -56,7 +54,6 @@ public class RelationshipViewScreen extends CassManagerScreen
 					}
 					ScreenManager.startupScreen = new RelationshipSearchScreen(null, null, null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

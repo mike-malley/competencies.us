@@ -20,7 +20,6 @@ public class AlignmentExplorerScreen extends CassManagerScreen {
 			public void $invoke() {
 				if (Global.window.document.location.hash.startsWith("#" + displayName)) {
 					ScreenManager.startupScreen = new AlignmentExplorerScreen();
-					showLoginModalIfReload();
 				}
 			}
 		});

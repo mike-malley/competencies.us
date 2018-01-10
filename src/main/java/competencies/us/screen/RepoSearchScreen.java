@@ -36,13 +36,11 @@ public class RepoSearchScreen extends CassManagerScreen
 					if (query != null || ownership != null || types != null)
 					{
 						ScreenManager.startupScreen = new RepoSearchScreen(null, query, ownership, types);
-						showLoginModalIfReload();
 						return;
 					}
 					
 					ScreenManager.startupScreen = new RepoSearchScreen(null, null, null, null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

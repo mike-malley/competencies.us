@@ -38,15 +38,13 @@ public class RelationshipSearchScreen extends CassManagerScreen {
 						if(query != null || ownership != null){
 							
 							ScreenManager.startupScreen = new RelationshipSearchScreen(null, query, ownership);
-							showLoginModalIfReload();
 							return;
 						}
 					}
 					
 					ScreenManager.startupScreen = new RelationshipSearchScreen(null, null, null);
-					
-					showLoginModalIfReload();
-				}	
+
+				}
 			}
 		});
 	}

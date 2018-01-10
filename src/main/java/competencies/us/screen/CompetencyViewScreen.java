@@ -45,18 +45,16 @@ public class CompetencyViewScreen extends CassManagerScreen
 							@Override
 							public void $invoke(EcCompetency data)
 							{
-								ScreenManager.replaceScreen(new CompetencyViewScreen(data), reloadShowLoginCallback, urlParameters);
+								ScreenManager.replaceScreen(new CompetencyViewScreen(data), afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 						}, new Callback1<String>()
 						{
 							@Override
 							public void $invoke(String p1)
 							{
-								ScreenManager.replaceScreen(new CompetencySearchScreen(null, null, null), reloadShowLoginCallback, urlParameters);
+								ScreenManager.replaceScreen(new CompetencySearchScreen(null, null, null), afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 						});
 
@@ -65,7 +63,6 @@ public class CompetencyViewScreen extends CassManagerScreen
 					}
 					ScreenManager.startupScreen = new CompetencySearchScreen(null, null, null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

@@ -37,18 +37,16 @@ public class FrameworkViewScreen extends CassManagerScreen
 							@Override
 							public void $invoke(EcFramework data)
 							{
-								ScreenManager.replaceScreen(new FrameworkViewScreen(data), reloadShowLoginCallback, urlParameters);
+								ScreenManager.replaceScreen(new FrameworkViewScreen(data), afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 						}, new Callback1<String>()
 						{
 							@Override
 							public void $invoke(String p1)
 							{
-								ScreenManager.replaceScreen(new FrameworkSearchScreen(null, null, null), reloadShowLoginCallback, urlParameters);
+								ScreenManager.replaceScreen(new FrameworkSearchScreen(null, null, null), afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 						});
 
@@ -57,7 +55,6 @@ public class FrameworkViewScreen extends CassManagerScreen
 					}
 					ScreenManager.startupScreen = new FrameworkSearchScreen(null, null, null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

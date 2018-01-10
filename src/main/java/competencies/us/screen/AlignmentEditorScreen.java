@@ -30,7 +30,6 @@ public class AlignmentEditorScreen extends CassManagerScreen {
 			public void $invoke() {
 				if (Global.window.document.location.hash.startsWith("#" + displayName)) {
 					ScreenManager.startupScreen = new AlignmentEditorScreen();
-					showLoginModalIfReload();
 				}
 			}
 		});

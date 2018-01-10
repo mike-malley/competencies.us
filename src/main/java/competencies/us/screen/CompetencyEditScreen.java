@@ -35,7 +35,7 @@ public class CompetencyEditScreen extends CassManagerScreen
 							public void $invoke(EcCompetency data)
 							{
 								ScreenManager.replaceScreen(new CompetencyEditScreen(data, (String)urlParameters.$get("frameworkId")),
-										reloadShowLoginCallback, urlParameters);
+										afterReload, urlParameters);
 							}
 						}, new Callback1<String>()
 						{
@@ -43,7 +43,7 @@ public class CompetencyEditScreen extends CassManagerScreen
 							public void $invoke(String p1)
 							{
 								ScreenManager.replaceScreen(new CompetencySearchScreen(null, null, null),
-										reloadShowLoginCallback, urlParameters);
+										afterReload, urlParameters);
 							}
 						});
 
@@ -52,7 +52,6 @@ public class CompetencyEditScreen extends CassManagerScreen
 					}
 					ScreenManager.startupScreen = new CompetencyEditScreen(null, null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

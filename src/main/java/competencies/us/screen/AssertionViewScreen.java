@@ -34,9 +34,8 @@ public class AssertionViewScreen extends CassManagerScreen
 							@Override
 							public void $invoke(EcAssertion data)
 							{
-								ScreenManager.replaceScreen(new AssertionViewScreen(data), reloadShowLoginCallback, urlParameters);
+								ScreenManager.replaceScreen(new AssertionViewScreen(data), afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 						}, new Callback1<String>()
 						{
@@ -44,9 +43,8 @@ public class AssertionViewScreen extends CassManagerScreen
 							public void $invoke(String p1)
 							{
 								ScreenManager.replaceScreen(new CompetencySearchScreen(null, null, null),
-										reloadShowLoginCallback, urlParameters);
+										afterReload, urlParameters);
 
-								showLoginModalIfReload();
 							}
 						});
 
@@ -55,7 +53,6 @@ public class AssertionViewScreen extends CassManagerScreen
 					}
 					ScreenManager.startupScreen = new AssertionSearchScreen(null);
 
-					showLoginModalIfReload();
 				}
 			}
 		});

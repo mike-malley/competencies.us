@@ -38,15 +38,13 @@ public class LevelSearchScreen extends CassManagerScreen {
 						if(query != null || ownership != null){
 							
 							ScreenManager.startupScreen = new LevelSearchScreen(null, query, ownership);
-							showLoginModalIfReload();
 							return;
 						}
 					}
 					
 					ScreenManager.startupScreen = new LevelSearchScreen(null, null, null);
-					
-					showLoginModalIfReload();
-				}	
+
+				}
 			}
 		});
 	}

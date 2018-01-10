@@ -1,6 +1,5 @@
 package competencies.us.screen;
 
-import competencies.us.AppController;
 import com.eduworks.ec.framework.browser.url.URLParams;
 import com.eduworks.ec.framework.view.EcScreen;
 import com.eduworks.ec.framework.view.manager.ModalManager;
@@ -33,21 +32,12 @@ public abstract class CassManagerScreen extends EcScreen
 		}
 	};
 
-	public static Callback0 reloadShowLoginCallback = new Callback0()
+	public static Callback0 afterReload = new Callback0()
 	{
 		@Override
 		public void $invoke()
 		{
-			showLoginModalIfReload();
 		}
 	};
-
-	public static void showLoginModalIfReload()
-	{
-		if (AppController.loginController.getPreviouslyLoggedIn() && !AppController.loginController.getLoggedIn())
-		{
-			//ModalManager.showModal(new LoginModal(reloadLoginCallback, null, AppSettings.returnLoginMessage), null);
-		}
-	}
 
 }

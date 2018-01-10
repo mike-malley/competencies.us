@@ -38,15 +38,13 @@ public class FrameworkSearchScreen extends CassManagerScreen {
 						if(query != null || ownership != null){
 							
 							ScreenManager.startupScreen = new FrameworkSearchScreen(null, query, ownership);
-							showLoginModalIfReload();
 							return;
 						}
 					}
 					
 					ScreenManager.startupScreen = new FrameworkSearchScreen(null, null, null);
-					
-					showLoginModalIfReload();
-				}	
+
+				}
 			}
 		});
 	}

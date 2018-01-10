@@ -1,5 +1,10 @@
 package competencies.us;
 
+import com.eduworks.ec.framework.browser.url.URLParams;
+import com.eduworks.ec.framework.view.manager.ModalManager;
+import com.eduworks.ec.framework.view.manager.ScreenManager;
+import com.eduworks.ec.framework.view.manager.ViewManager;
+import com.eduworks.foundation.jquery.plugin.Foundation;
 import competencies.us.controller.IdentityController;
 import competencies.us.controller.LoginController;
 import competencies.us.controller.ServerController;
@@ -7,15 +12,11 @@ import competencies.us.controller.StorageController;
 import competencies.us.modal.AddServerModal;
 import competencies.us.other.AppMenu;
 import competencies.us.screen.WelcomeScreen;
-import com.eduworks.ec.framework.browser.url.URLParams;
-import com.eduworks.ec.framework.view.manager.ModalManager;
-import com.eduworks.ec.framework.view.manager.ScreenManager;
-import com.eduworks.ec.framework.view.manager.ViewManager;
-import com.eduworks.foundation.jquery.plugin.Foundation;
 import org.stjs.javascript.Global;
 import org.stjs.javascript.JSGlobal;
 import org.stjs.javascript.dom.Element;
 import org.stjs.javascript.functions.Callback0;
+import org.stjs.javascript.functions.Callback1;
 import org.stjs.javascript.jquery.Event;
 import org.stjs.javascript.jquery.EventHandler;
 import org.stjs.javascript.jquery.GlobalJQuery;
@@ -95,38 +96,49 @@ public class AppController {
 				// Give Login Controller access to the User Identity Controller
 				loginController.identity = identityController;
 
-				// Start the Web Application
-				ScreenManager.setDefaultScreen(new WelcomeScreen());
-
-				// Show App Menu on document ready
-				GlobalJQuery.$(Global.window.document).ready(new EventHandler(){
+				Callback0 afterTryLogin = new Callback0() {
 					@Override
-					public boolean onEvent(Event arg0, Element arg1) {
-						ViewManager.showView(new AppMenu(), topBarContainerId, new Callback0(){
-							@Override
-							public void $invoke() {
-								((Foundation<?>)GlobalJQuery.$(window.document)).foundation();
+					public void $invoke() {
 
-								AppMenu menu = (AppMenu) ViewManager.getView(topBarContainerId);
-								menu.showRepoMenu(AppSettings.showRepoMenu);
-								menu.showExamplesMenu(AppSettings.showExamplesMenu);
+						// Start the Web Application
+						ScreenManager.setDefaultScreen(new WelcomeScreen());
+
+						// Show App Menu on document ready
+						GlobalJQuery.$(Global.window.document).ready(new EventHandler(){
+							@Override
+							public boolean onEvent(Event arg0, Element arg1) {
+								ViewManager.showView(new AppMenu(), topBarContainerId, new Callback0(){
+									@Override
+									public void $invoke() {
+										((Foundation<?>)GlobalJQuery.$(window.document)).foundation();
+
+										AppMenu menu = (AppMenu) ViewManager.getView(topBarContainerId);
+										menu.showRepoMenu(AppSettings.showRepoMenu);
+										menu.showExamplesMenu(AppSettings.showExamplesMenu);
+									}
+								});
+								String server = URLParams.get("server");
+
+								if(server != null && server != JSGlobal.undefined){
+									for(String name : serverController.serverList){
+										if(serverController.serverList.$get(name).startsWith(server)){
+											serverController.selectServer(name, null, null);
+											return true;
+										}
+									}
+
+									ModalManager.showModal(new AddServerModal(null, server), null);
+								}
+								return true;
 							}
 						});
-						String server = URLParams.get("server");
-
-						if(server != null && server != JSGlobal.undefined){
-							for(String name : serverController.serverList){
-								if(serverController.serverList.$get(name).startsWith(server)){
-									serverController.selectServer(name, null, null);
-									return true;
-								}
-							}
-
-							ModalManager.showModal(new AddServerModal(null, server), null);
-						}
-						return true;
 					}
-				});
+				};
+
+				if (AppController.loginController.cacheReady())
+					AppController.loginController.loginWithCache(afterTryLogin,(Callback1)afterTryLogin);
+				else
+					afterTryLogin.$invoke();
 			}
 		});
 		serverController.init(AppSettings.defaultServerUrl, AppSettings.defaultServerName);
