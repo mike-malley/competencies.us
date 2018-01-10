@@ -17,7 +17,13 @@ UserAdminScreen = (function(UserAdminScreen){
 	 * 			Screen Container DOM ID
 	 */
 	UserAdminScreen.prototype.display = function(containerId)
-	{			
+	{
+		if (!AppController.loginController.getLoggedIn())
+		{
+            ScreenManager.changeScreen(new WelcomeScreen());
+            return;
+        }
+
 		ViewManager.showView(new MessageContainer("userAdmin"), "#userAdminMessageContainer");
 		ViewManager.showView(new MessageContainer("moodleToCass"), "#moodleToCassMessageContainer");
 		ViewManager.showView(new MessageContainer("cassToMoodle"), "#cassToMoodleMessageContainer");

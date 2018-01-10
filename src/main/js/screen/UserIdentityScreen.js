@@ -386,6 +386,11 @@ UserIdentityScreen = (function (UserIdentityScreen) {
 	 * 			Screen Container DOM ID
 	 */
     UserIdentityScreen.prototype.display = function (containerId) {
+		if (!AppController.loginController.getLoggedIn())
+		{
+            ScreenManager.changeScreen(new WelcomeScreen());
+            return;
+        }
         var screen = this;
 
         ViewManager.showView(new MessageContainer("userIdentity"), "#userIdentityMessageContainer");
