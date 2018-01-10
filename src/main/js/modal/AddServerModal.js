@@ -34,6 +34,7 @@ var AddServerModal = (function(AddServerModal){
 					AppMenu.prototype.setCurrentServer();
 
 					ModalManager.hideModal();
+					me.onClose();
 				});
 			},displayError);
 		}, displayError);

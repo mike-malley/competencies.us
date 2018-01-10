@@ -3154,6 +3154,7 @@ var AddServerModal = (function(AddServerModal){
 					AppMenu.prototype.setCurrentServer();
 
 					ModalManager.hideModal();
+					me.onClose();
 				});
 			},displayError);
 		}, displayError);
@@ -5352,7 +5353,11 @@ var AppMenu = (function (AppMenu) {
         buildServerList();
 
         $("#appMenuAddServerBtn").click(function(){
-            ModalManager.showModal(new AddServerModal());
+        	var m = new AddServerModal();
+        	m.closeEvent = function(){
+                ScreenManager.reloadCurrentScreen();
+            }
+            ModalManager.showModal(m);
         });
 
         $("#sessionServerSelect").change(function(){
@@ -5367,11 +5372,10 @@ var AppMenu = (function (AppMenu) {
 
                 selected.prop("selected", "true");
 
-
                 ScreenManager.reloadCurrentScreen();
             }, function(){
 
-            })
+            });
         });
 
         AppController.serverController.onServerChange.push(function(){
