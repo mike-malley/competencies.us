@@ -70,7 +70,7 @@ public class CassEditorScreen extends CassManagerScreen {
 		String server = "?server="+AppController.serverController.selectedServerUrl;
 		String origin = "&origin="+Global.window.location.origin;
 		String viewer = AppController.loginController.getLoggedIn() ? "&user=wait" : "&view=true";
-		$(containerId).find("#cassEditor").attr("src","https://cassproject.github.io/cass-editor/index.html"+server+origin+viewer);
+		$(containerId).find("#cassEditor").attr("src","cass-editor/index.html"+server+origin+viewer);
 		if (AppController.loginController.getLoggedIn())
 		{
 			$(containerId).find("#cassEditor").ready(new EventHandler() {
@@ -84,7 +84,7 @@ public class CassEditorScreen extends CassManagerScreen {
 							JSObjectAdapter.$put(ident,"action","identity");
 							JSObjectAdapter.$put(ident,"identity",AppController.identityController.selectedIdentity.ppk.toPem());
 							ident = Global.JSON.stringify(ident);
-							((messagePoster)(Object)$(containerId).find("#cassEditor").$get(0).contentWindow).postMessage(ident, "https://cassproject.github.io");
+							((messagePoster)(Object)$(containerId).find("#cassEditor").$get(0).contentWindow).postMessage(ident, Global.window.location.origin);
 						}
 					},1000);
 					return false;

@@ -2544,7 +2544,7 @@ CassEditorScreen = stjs.extend(CassEditorScreen, CassManagerScreen, [], function
         var server = "?server=" + AppController.serverController.selectedServerUrl;
         var origin = "&origin=" + window.location.origin;
         var viewer = AppController.loginController.getLoggedIn() ? "&user=wait" : "&view=true";
-        $(containerId).find("#cassEditor").attr("src", "https://cassproject.github.io/cass-editor/index.html" + server + origin + viewer);
+        $(containerId).find("#cassEditor").attr("src", "cass-editor/index.html" + server + origin + viewer);
         if (AppController.loginController.getLoggedIn()) {
             $(containerId).find("#cassEditor").ready(stjs.bind(this, function(ev, THIS) {
                 setTimeout(function() {
@@ -2552,7 +2552,7 @@ CassEditorScreen = stjs.extend(CassEditorScreen, CassManagerScreen, [], function
                     (ident)["action"] = "identity";
                     (ident)["identity"] = AppController.identityController.selectedIdentity.ppk.toPem();
                     ident = JSON.stringify(ident);
-                    ($(containerId).find("#cassEditor")[0].contentWindow).postMessage(ident, "https://cassproject.github.io");
+                    ($(containerId).find("#cassEditor")[0].contentWindow).postMessage(ident, window.location.origin);
                 }, 1000);
                 return false;
             }, 1));
