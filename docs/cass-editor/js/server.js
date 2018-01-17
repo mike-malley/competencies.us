@@ -213,7 +213,7 @@ loadIdentity = function (callback) {
     } else if (queryParams.user == "wait") {
         var fun = function (evt) {
             var data = evt.data;
-            if (data != null)
+            if (data != null && data != "" && !EcObject.isObject(data))
                 data = JSON.parse(data);
             if (data.action == "identity") {
                 identity = new EcIdentity();
@@ -221,6 +221,12 @@ loadIdentity = function (callback) {
                 identity.displayName = "You";
                 EcIdentityManager.addIdentity(identity);
                 callback();
+                var message = {
+                    action: "response",
+                    message: "identityOk"
+                };
+                console.log(message);
+                parent.postMessage(message, queryParams.origin);
             }
         };
         if (window.addEventListener) {
@@ -228,6 +234,11 @@ loadIdentity = function (callback) {
         } else {
             window.attachEvent("onmessage", fun);
         }
+        var message = {
+            message: "waiting"
+        };
+        console.log(message);
+        parent.postMessage(message, queryParams.origin);
     } else
         callback();
 }
@@ -236,12 +247,18 @@ var frameworkTemplate = null;
 var competencyTemplate = null;
 var messageListener = function (evt) {
     var data = evt.data;
-    if (data != null && data != "")
+    if (data != null && data != "" && !EcObject.isObject(data))
         data = JSON.parse(data);
     if (data != null && data != "")
         if (data.action == "template") {
             EcFramework.template = data.framework;
             EcCompetency.template = data.competency;
+            var message = {
+                action: "response",
+                message: "templateOk"
+            };
+            console.log(message);
+            parent.postMessage(message, queryParams.origin);
         }
 };
 if (window.addEventListener) {

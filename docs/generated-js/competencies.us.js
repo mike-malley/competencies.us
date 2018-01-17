@@ -2531,6 +2531,7 @@ var CassEditorScreen = function(data) {
 CassEditorScreen = stjs.extend(CassEditorScreen, CassManagerScreen, [], function(constructor, prototype) {
     constructor.displayName = "cassEditor";
     prototype.mc = null;
+    prototype.eventHandle = null;
     prototype.getData = function() {
         return this.data;
     };
@@ -2540,25 +2541,31 @@ CassEditorScreen = stjs.extend(CassEditorScreen, CassManagerScreen, [], function
     prototype.getHtmlLocation = function() {
         return "partial/screen/cassEditorScreen.html";
     };
+    prototype.onClose = function() {
+        if (this.eventHandle != null) 
+            window.removeEventListener("message", this.eventHandle);
+        return EcView.prototype.onClose.call(this);
+    };
     prototype.display = function(containerId) {
         var server = "?server=" + AppController.serverController.selectedServerUrl;
         var origin = "&origin=" + window.location.origin;
         var viewer = AppController.loginController.getLoggedIn() ? "&user=wait" : "&view=true";
-        $(containerId).find("#cassEditor").attr("src", "cass-editor/index.html" + server + origin + viewer);
         if (AppController.loginController.getLoggedIn()) {
-            $(containerId).find("#cassEditor").ready(stjs.bind(this, function(ev, THIS) {
-                setTimeout(function() {
-                    var ident = new Object();
-                    (ident)["action"] = "identity";
-                    (ident)["identity"] = AppController.identityController.selectedIdentity.ppk.toPem();
-                    ident = JSON.stringify(ident);
-                    ($(containerId).find("#cassEditor")[0].contentWindow).postMessage(ident, window.location.origin);
-                }, 1000);
-                return false;
-            }, 1));
+            window.addEventListener("message", this.eventHandle = function(event) {
+                if ((event)["origin"] == window.location.origin) 
+                    if ((event)["data"] != null) 
+                        if (((event)["data"])["message"] == "waiting") {
+                            var ident = new Object();
+                            (ident)["action"] = "identity";
+                            (ident)["identity"] = AppController.identityController.selectedIdentity.ppk.toPem();
+                            ident = JSON.stringify(ident);
+                            ($(containerId).find("#cassEditor")[0].contentWindow).postMessage(ident, window.location.origin);
+                        }
+            });
         }
+        $(containerId).find("#cassEditor").attr("src", "cass-editor/index.html" + server + origin + viewer);
     };
-}, {mc: "MessageContainer", data: "Object", reloadLoginCallback: {name: "Callback1", arguments: ["Object"]}, afterReload: "Callback0", failure: {name: "Callback1", arguments: [null]}, nameToTemplate: "Object"}, {});
+}, {mc: "MessageContainer", eventHandle: "Callback1", data: "Object", reloadLoginCallback: {name: "Callback1", arguments: ["Object"]}, afterReload: "Callback0", failure: {name: "Callback1", arguments: [null]}, nameToTemplate: "Object"}, {});
 (function() {
     ScreenManager.addStartupScreenCallback(function() {
         if (window.document.location.hash.startsWith("#" + CassEditorScreen.displayName)) {
